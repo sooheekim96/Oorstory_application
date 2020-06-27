@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView
+    android:id="@+id/recycler1_card_view"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:layout_margin="5dp"
+    android:background="#fff">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#fff"
+        android:weightSum="10">
+
+        <ImageView
+            android:id="@+id/title_story_iv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="7"
+            android:orientation="vertical"
+            android:weightSum="10"
+            android:layout_margin="10dp"
+            android:paddingLeft="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="3"
+                android:weightSum="10">
+
+                <TextView
+                    android:id="@+id/title_story"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="9"
+                    android:text="스토리 타이틀"
+                    android:textSize="18dp"
+                    android:textColor="#000"
+                    android:textStyle="bold"
+                    android:gravity="center_vertical|left"
+                    android:maxLines="1"/>
+
+                <ImageButton
+                    android:id="@+id/is_starred"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/star"
+                    android:scaleType="fitCenter"
+                    android:background="@android:color/transparent"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2.5"/>
+
+            <LinearLayout
+                android:id="@+id/difficulty_ll"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <ImageView
+                    android:id="@+id/diff1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/star"
+                    android:scaleType="fitCenter"
+                    />
+
+                <ImageView
+                    android:id="@+id/diff2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/star"
+                    android:scaleType="fitCenter"
+                    />
+
+                <ImageView
+                    android:id="@+id/diff3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/star"
+                    android:scaleType="fitCenter"
+                    />
+
+                <ImageView
+                    android:id="@+id/diff4"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/star"
+                    android:scaleType="fitCenter"
+                    />
+
+                <ImageView
+                    android:id="@+id/diff5"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/star"
+                    android:scaleType="fitCenter"
+                    />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="3"
+                android:weightSum="10">
+
+                <TextView
+                    android:id="@+id/theme_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="7"
+                    android:text="테마 이름"
+                    android:textColor="#000"
+                    android:gravity="center_vertical|left"
+                    />
+
+                <TextView
+                    android:id="@+id/time_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:text="소요시간"
+                    android:textColor="#000"
+                    android:gravity="center_vertical|right"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
