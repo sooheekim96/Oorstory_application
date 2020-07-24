@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -14,12 +15,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> implements View.OnClickListener {
+public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder>{
     private ArrayList<RecyclerItem> mData = null ;
-    private Context mainCon = null;
 
-    RecyclerAdapter(Context mainCon, ArrayList<RecyclerItem> list) {
-        this.mainCon = mainCon;
+    RecyclerAdapter(ArrayList<RecyclerItem> list) {
         mData = list ;
     }
 
@@ -103,6 +102,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
             }
         });
+
+
     }
 
     @Override
@@ -110,12 +111,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         return mData.size();
     }
 
-    @Override
-    public void onClick(View view) {
-        Intent intent = new Intent(view.getContext(), StoryDetailActivity.class);
-//        this.finish();
-        mainCon.startActivity(intent);
-    }
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -126,6 +121,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         ViewHolder(View itemView) {
             super(itemView) ;
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(view.getContext(),"스토리 디테일 화면이얌", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(view.getContext(), StoryDetailActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    view.getContext().startActivity(intent);
+                }
+            });
             // 뷰 객체에 대한 참조. (hold strong reference)
             title_story_iv = itemView.findViewById(R.id.title_story_iv);
             is_starred = itemView.findViewById(R.id.is_starred) ;

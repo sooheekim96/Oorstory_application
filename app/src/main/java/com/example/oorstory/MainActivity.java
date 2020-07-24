@@ -53,10 +53,10 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(manager);
 
-        mAdapter_place = new RecyclerAdapter(getApplicationContext(),mList_place);
-        mAdapter_food = new RecyclerAdapter(getApplicationContext(),mList_food);
-        mAdapter_hist = new RecyclerAdapter(getApplicationContext(),mList_hist);
-        mAdapter_nature = new RecyclerAdapter(getApplicationContext(),mList_nature);
+        mAdapter_place = new RecyclerAdapter(mList_place);
+        mAdapter_food = new RecyclerAdapter(mList_food);
+        mAdapter_hist = new RecyclerAdapter(mList_hist);
+        mAdapter_nature = new RecyclerAdapter(mList_nature);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             set_category_item();
