@@ -9,12 +9,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class StoryDetailActivity extends AppCompatActivity {
 
-    String title_story = getIntent().getStringExtra("title_story");
     TextView storyTitleName = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_story_detail);
+        String title_story = getIntent().getStringExtra("title_story");
 
         storyTitleName = findViewById(R.id.storyTitleName);
         storyTitleName.setText(title_story);
