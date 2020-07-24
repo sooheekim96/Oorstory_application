@@ -1,6 +1,7 @@
 package com.example.oorstory;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +14,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
+public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> implements View.OnClickListener {
     private ArrayList<RecyclerItem> mData = null ;
+    private Context mainCon = null;
 
-    RecyclerAdapter(ArrayList<RecyclerItem> list) {
+    RecyclerAdapter(Context mainCon, ArrayList<RecyclerItem> list) {
+        this.mainCon = mainCon;
         mData = list ;
     }
 
@@ -107,6 +110,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         return mData.size();
     }
 
+    @Override
+    public void onClick(View view) {
+        Intent intent = new Intent(view.getContext(), StoryDetailActivity.class);
+//        this.finish();
+        mainCon.startActivity(intent);
+    }
+
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView title_story_iv, is_starred, diff1, diff2, diff3, diff4, diff5;
         private TextView title_story, theme_story, time_story;
@@ -129,4 +140,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             recycler1_card_view = itemView.findViewById(R.id.recycler1_card_view);
         }
     }
+
+
 }

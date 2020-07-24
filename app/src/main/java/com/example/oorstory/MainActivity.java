@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -51,10 +53,10 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(manager);
 
-        mAdapter_place = new RecyclerAdapter(mList_place);
-        mAdapter_food = new RecyclerAdapter(mList_food);
-        mAdapter_hist = new RecyclerAdapter(mList_hist);
-        mAdapter_nature = new RecyclerAdapter(mList_nature);
+        mAdapter_place = new RecyclerAdapter(getApplicationContext(),mList_place);
+        mAdapter_food = new RecyclerAdapter(getApplicationContext(),mList_food);
+        mAdapter_hist = new RecyclerAdapter(getApplicationContext(),mList_hist);
+        mAdapter_nature = new RecyclerAdapter(getApplicationContext(),mList_nature);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             set_category_item();
@@ -91,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Main : " + address, Toast.LENGTH_LONG).show();
             }
         }
+
     }
 
     public void addItem(Drawable title_pic, String title, String theme, int star, int time, boolean is_starred) {
@@ -178,5 +181,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
+
+
 
 }
