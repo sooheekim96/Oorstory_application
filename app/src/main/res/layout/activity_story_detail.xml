@@ -37,14 +37,14 @@
             android:src="@drawable/back" />
 
         <TextView
+            android:id="@+id/storyTitleName"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.8"
             android:gravity="center"
             android:text="스토리 타이틀"
             android:textColor="#000"
-            android:textSize="18dp"
-            />
+            android:textSize="18dp" />
 
         <View
             android:layout_width="0dp"

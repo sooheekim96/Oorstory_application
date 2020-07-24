@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void setting_onClick(View view) {
         Intent intent = new Intent(MainActivity.this, SettingActivity.class);
-//        this.finish();
+        // this.finish();
         startActivity(intent);
 
     }

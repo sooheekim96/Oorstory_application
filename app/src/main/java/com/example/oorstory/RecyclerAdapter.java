@@ -126,7 +126,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 public void onClick(View view) {
                     Toast.makeText(view.getContext(),"스토리 디테일 화면이얌", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(view.getContext(), StoryDetailActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("title_story", title_story.getText());
                     view.getContext().startActivity(intent);
                 }
             });
