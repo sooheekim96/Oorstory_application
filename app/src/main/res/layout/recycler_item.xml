@@ -46,7 +46,8 @@
                     android:textColor="#000"
                     android:textStyle="bold"
                     android:gravity="center_vertical|left"
-                    android:maxLines="1"/>
+                    android:maxLines="1"
+                    android:clickable="true" />
 
                 <ImageButton
                     android:id="@+id/is_starred"

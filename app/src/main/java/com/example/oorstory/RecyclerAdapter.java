@@ -1,11 +1,16 @@
 package com.example.oorstory;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -13,8 +18,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     private ArrayList<RecyclerItem> mData = null ;
+    private Context context;
+    int star_num; // 별점 개수
 
     RecyclerAdapter(ArrayList<RecyclerItem> list) {
         mData = list ;
@@ -27,7 +36,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     @NonNull
     @Override
     public RecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Context context = parent.getContext() ;
+        context = parent.getContext() ;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) ;
 
         View view = inflater.inflate(R.layout.recycler_item, parent, false) ;
@@ -48,7 +57,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 //            holder.is_starred.setImageResource(R.drawable.star);
 //        }
 
-        int star_num = item.getStar_num();
+        star_num = item.getStar_num();
         if (star_num >= 1){
             holder.diff1.setImageResource(R.drawable.starred);
         }
@@ -127,6 +136,20 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             theme_story = itemView.findViewById(R.id.theme_tv) ;
             time_story = itemView.findViewById(R.id.time_tv) ;
             recycler1_card_view = itemView.findViewById(R.id.recycler1_card_view);
+
+            // 클릭 이벤트
+            title_story.setOnClickListener(new TextView.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    Log.e("클릭 발생", "제목을 클릭 했습니다.");
+                    Intent intent = new Intent(v.getContext(), MapActivity.class);
+                    intent.putExtra("title", title_story.getText().toString());
+                    intent.putExtra("theme", theme_story.getText().toString());
+                    intent.putExtra("time", time_story.getText().toString());
+                    intent.putExtra("star_num", star_num+""); // 별 개수
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 }

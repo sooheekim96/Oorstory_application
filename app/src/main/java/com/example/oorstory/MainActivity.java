@@ -121,7 +121,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
     public void location_onClick(View view) {
         Intent intent = new Intent(MainActivity.this, LocationActivity.class);
         this.finish();
