@@ -121,15 +121,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         ViewHolder(View itemView) {
             super(itemView) ;
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText(view.getContext(),"스토리 디테일 화면이얌", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(view.getContext(), StoryDetailActivity.class);
-                    intent.putExtra("title_story", title_story.getText());
-                    view.getContext().startActivity(intent);
-                }
-            });
             // 뷰 객체에 대한 참조. (hold strong reference)
             title_story_iv = itemView.findViewById(R.id.title_story_iv);
             is_starred = itemView.findViewById(R.id.is_starred) ;
