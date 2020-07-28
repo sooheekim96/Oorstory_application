@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -91,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Main : " + address, Toast.LENGTH_LONG).show();
             }
         }
+
     }
 
     public void addItem(Drawable title_pic, String title, String theme, int star, int time, boolean is_starred) {
@@ -116,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void setting_onClick(View view) {
         Intent intent = new Intent(MainActivity.this, SettingActivity.class);
-//        this.finish();
+        // this.finish();
         startActivity(intent);
 
     }
@@ -177,5 +180,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
+
+
 
 }

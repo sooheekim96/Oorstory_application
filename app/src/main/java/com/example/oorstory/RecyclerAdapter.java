@@ -2,23 +2,16 @@ package com.example.oorstory;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
-
-import static androidx.core.content.ContextCompat.startActivity;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     private ArrayList<RecyclerItem> mData = null ;
@@ -109,12 +102,16 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
             }
         });
+
+
     }
 
     @Override
     public int getItemCount() {
         return mData.size();
     }
+
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView title_story_iv, is_starred, diff1, diff2, diff3, diff4, diff5;
@@ -152,4 +149,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             });
         }
     }
+
+
 }

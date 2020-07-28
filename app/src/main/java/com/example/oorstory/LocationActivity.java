@@ -53,6 +53,18 @@ public class LocationActivity extends AppCompatActivity {
             }
         });
 
+        // 메인화면으로 돌아가기
+        ImageButton back_btn = findViewById(R.id.back_btn);
+        back_btn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view)
+            {
+                Intent intent = new Intent(LocationActivity.this, MainActivity.class);
+                finish();
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void findLatLng(String output){
