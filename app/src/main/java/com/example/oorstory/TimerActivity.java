@@ -22,7 +22,7 @@ import androidx.core.app.NotificationManagerCompat;
 
 import java.util.concurrent.TimeUnit;
 
-//import static com.example.Notification.CHANNEL_1_ID;
+import static com.example.oorstory.TimerNotification.CHANNEL_1_ID;
 
 public class TimerActivity extends AppCompatActivity implements View.OnClickListener {
     private NotificationCompat.Builder notification;
@@ -100,7 +100,7 @@ public class TimerActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    /*public void sendOnChannel1(View view){
+    public void sendOnChannel1(View view){
         String title = "title";
 
         Bitmap artwork = BitmapFactory.decodeResource(getResources(), R.drawable.fire);
@@ -120,7 +120,7 @@ public class TimerActivity extends AppCompatActivity implements View.OnClickList
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE);
 
         notificationManager.notify(1, notification.build());
-    }*/
+    }
 
     /**
      * method to reset count down timer
@@ -150,7 +150,7 @@ public class TimerActivity extends AppCompatActivity implements View.OnClickList
             // changing the timer status to started
             timerStatus = TimerStatus.STARTED;
             // call notification bar
-            //sendOnChannel1(view);
+            sendOnChannel1(view);
             // call to start the count down timer
             startCountDownTimer();
 
