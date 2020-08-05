@@ -4,12 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 public class StoryActivity extends AppCompatActivity {
     private String userLocation;
+    private Button gamestart;
     String title, theme, time;
     int star_num;
 
@@ -57,6 +59,19 @@ public class StoryActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // 게임 시작하기 및 타이머 시작
+        gamestart = (Button)findViewById(R.id.gamestart);
+        gamestart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(
+                        getApplicationContext(),
+                        TimerActivity.class); // 다음 넘어갈 클래스 지정
+                startActivity(intent); // 다음 화면으로 넘어간다
+            }
+        });
+
     }
 
     // 카브뷰 펼치기/접기 이벤트
