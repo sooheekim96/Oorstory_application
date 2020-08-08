@@ -1,7 +1,13 @@
 package com.example.oorstory;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.Activity;
+import android.app.Service;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -65,13 +71,21 @@ public class StoryActivity extends AppCompatActivity {
         gamestart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(
-                        getApplicationContext(),
-                        TimerActivity.class); // 다음 넘어갈 클래스 지정
-                startActivity(intent); // 다음 화면으로 넘어간다
+
+                //다른 앱 위에 그리기 허용 확인
+                if(Build.VERSION.SDK_INT >= 23) {
+                    if (!Settings.canDrawOverlays(StoryActivity.this)) {
+                        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                                Uri.parse("package:" + getPackageName()));
+                        startActivity(intent);
+                    }
+                }
+                else{
+                    Intent intent = new Intent(StoryActivity.this, stopWatchFloatingView.class);
+                    startService(intent);
+                }
             }
         });
-
     }
 
     // 카브뷰 펼치기/접기 이벤트
