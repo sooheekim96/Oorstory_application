@@ -80,11 +80,11 @@ public class StoryActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                 }
-                else{
-                    Intent intent = new Intent(StoryActivity.this, stopWatchFloatingView.class);
-                    startService(intent);
-                }
+                Intent intent = new Intent(StoryActivity.this, stopWatchFloatingView.class);
+                intent.putExtra("title", title);
+                startService(intent);
             }
+
         });
     }
 
