@@ -1,8 +1,6 @@
 package com.example.oorstory;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
-import android.app.Service;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -80,7 +78,7 @@ public class StoryActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                 }
-                Intent intent = new Intent(StoryActivity.this, stopWatchFloatingView.class);
+                Intent intent = new Intent(StoryActivity.this, StopWatchService.class);
                 intent.putExtra("title", title);
                 startService(intent);
             }

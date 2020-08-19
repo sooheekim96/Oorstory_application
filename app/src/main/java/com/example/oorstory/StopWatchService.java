@@ -1,8 +1,11 @@
 package com.example.oorstory;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.net.Uri;
 import android.os.Build;
@@ -23,14 +26,15 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import static android.view.WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
 import static android.view.WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
 import static android.view.WindowManager.LayoutParams.TYPE_PHONE;
+import static com.example.oorstory.TimerNotification.CHANNEL_1_ID;
 
-public class stopWatchFloatingView extends Service  {
+public class StopWatchService extends Service  {
 
     private WindowManager windowManager;
     private View floatingView;
     private String title;
 
-    public stopWatchFloatingView() {
+    public StopWatchService() {
 
     }
 
@@ -45,11 +49,27 @@ public class stopWatchFloatingView extends Service  {
         if(intent == null){
             return Service.START_STICKY;
         }else {
+
             //StoryActivity에서 title 정보 가져오기
             title = intent.getStringExtra("title");
 
-            floatingView = LayoutInflater.from(this).inflate(R.layout.activity_stop_watch_floating_view, null);
+            Intent notificationIntent = new Intent(this, StoryActivity.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
+            Notification notification = new Notification.Builder(this, CHANNEL_1_ID )
+                    .setContentTitle(title)
+                    .setSmallIcon(R.drawable.ic_timer)
+                    .setContentIntent(pendingIntent)
+                    .build();
+
+            startForeground(3, notification);
+
+            //View 만들기
+
+            floatingView = LayoutInflater.from(this).inflate(R.layout.activity_stop_watch_floating_view, null);
+            floatingView.setBackgroundColor(Color.TRANSPARENT);
+
+            //check layout flag
             int LAYOUT_FLAG;
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 LAYOUT_FLAG = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
@@ -121,7 +141,10 @@ public class stopWatchFloatingView extends Service  {
             });
 
         }
-        return super.onStartCommand(intent, flags, startId);
+
+
+
+        return START_NOT_STICKY;
     }
 
     @Override

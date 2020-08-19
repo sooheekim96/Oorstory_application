@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
-            android:id="@+id/layoutCollapsed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@android:color/transparent"
-            android:visibility="visible">
+        android:id="@+id/layoutCollapsed"
+        android:layout_width="196dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:orientation="vertical"
+        android:visibility="visible">
 
         <ImageView
             android:id="@+id/circleView"
@@ -27,22 +28,23 @@
 
         <TextView
             android:id="@+id/storyTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="151dp"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_below="@id/textViewTime"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_horizontal"
             android:text="스토리 타이틀"
             android:textColor="@color/colorWhite"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            app:autoSizeTextType="uniform" />
 
         <TextView
-                android:id="@+id/textViewTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="00:01:00"
-                android:textColor="@color/colorWhite"
-                android:textSize="40sp" />
-
+            android:id="@+id/textViewTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="00:01:00"
+            android:textColor="@color/colorWhite"
+            android:textSize="40sp" />
     </RelativeLayout>
 </FrameLayout>
