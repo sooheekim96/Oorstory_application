@@ -27,7 +27,7 @@ public class RecyclerCommentsAdapter extends RecyclerView.Adapter<RecyclerCommen
         context = parent.getContext() ;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) ;
 
-        View view = inflater.inflate(R.layout.recycler_item, parent, false) ;
+        View view = inflater.inflate(R.layout.recycler_comments, parent, false) ;
         RecyclerCommentsAdapter.ViewHolder vh = new RecyclerCommentsAdapter.ViewHolder(view) ;
 
         return vh ;

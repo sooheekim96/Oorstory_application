@@ -1,8 +1,11 @@
 package com.example.oorstory;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.view.View;
+import android.widget.ImageButton;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,6 +35,21 @@ public class CommentActivity extends AppCompatActivity {
 
         addItem("장한솔", "재밌어요", "2020-08-22");
         addItem("유다연", "재미없어요", "2020-08-23");
+
+        c_recycler.setAdapter(cAdapter);
+        cAdapter.notifyDataSetChanged();
+
+        // mapActivity로 돌아가기
+        ImageButton back_btn = findViewById(R.id.back_btn_toMap);
+        back_btn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view)
+            {
+                Intent intent = new Intent(CommentActivity.this, MapActivity.class);
+                finish();
+                startActivity(intent);
+            }
+        });
     }
 
     public void addItem( String nickname, String comment, String date) {
