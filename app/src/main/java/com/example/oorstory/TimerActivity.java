@@ -38,6 +38,7 @@ public class TimerActivity extends AppCompatActivity implements View.OnClickList
         STOPPED
     }
 
+
     private TimerStatus timerStatus = TimerStatus.STOPPED;
 
     private ProgressBar progressBarCircle;
