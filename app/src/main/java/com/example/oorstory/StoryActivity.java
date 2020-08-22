@@ -99,6 +99,10 @@ public class StoryActivity extends AppCompatActivity {
                 textView = findViewById(R.id.explan_story_tv);
                 Log.e("클릭!!스토리",(textView.getVisibility()+""));
                 break;
+            case R.id.show_place_tv :
+                textView = findViewById(R.id.explan_place_tv);
+                Log.e("클릭!!목표장소",(textView.getVisibility()+""));
+                break;
             default:
                 throw new IllegalStateException("Unexpected value: " + view.getId());
         }

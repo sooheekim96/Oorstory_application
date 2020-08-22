@@ -35,6 +35,13 @@ public class CommentActivity extends AppCompatActivity {
 
         addItem("장한솔", "재밌어요", "2020-08-22");
         addItem("유다연", "재미없어요", "2020-08-23");
+        addItem("유다연", "재미없어요", "2020-08-23");
+        addItem("유다연", "재미없어요", "2020-08-23");
+        addItem("유다연", "재미없어요", "2020-08-23");
+        addItem("유다연", "재미없어요", "2020-08-23");
+        addItem("유다연", "재미없어요", "2020-08-23");
+        addItem("유다연", "재미없어요", "2020-08-23");
+
 
         c_recycler.setAdapter(cAdapter);
         cAdapter.notifyDataSetChanged();
