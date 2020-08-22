@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="10"
+    tools:context=".CommentActivity"
+    android:background="#fff">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#FFF"
+        android:weightSum="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_weight="0.02" />
+
+        <ImageButton
+            android:id="@+id/back_btn_toMap"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.08"
+            android:background="@android:color/transparent"
+            android:paddingLeft="0dp"
+            android:paddingTop="5dp"
+            android:paddingRight="2dp"
+            android:paddingBottom="5dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/back" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.8"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textColor="#000"
+            android:textSize="22dp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear2Layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFF"
+        android:orientation="vertical"
+        android:weightSum="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/WritingComment"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:gravity="right|fill_vertical"
+                android:text="댓글쓰기"
+                android:textColor="#000"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/c_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="649dp"
+        android:layout_weight="8"
+        android:orientation="vertical">
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+</LinearLayout>

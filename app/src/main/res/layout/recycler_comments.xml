@@ -1,0 +1,40 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/recycler1_card_view"
+    android:layout_width="match_parent"
+    android:layout_height="130dp"
+    android:layout_margin="5dp"
+    android:background="#fff">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="134dp"
+        android:background="#fff"
+        android:orientation="vertical"
+        android:weightSum="10">
+
+        <TextView
+            android:id="@+id/CommentUserName"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="닉네임"
+            android:textColor="#000" />
+
+        <TextView
+            android:id="@+id/CommentContent"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:gravity="center"
+            android:text="댓글 내용"
+            android:textColor="#000" />
+
+        <TextView
+            android:id="@+id/CommentUserDate"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:gravity="right"
+            android:text="2020-08-20"
+            android:textColor="#000" />
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
