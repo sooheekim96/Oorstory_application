@@ -7,11 +7,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class StoryActivity extends AppCompatActivity {
     private String userLocation;
     private Button gamestart;
+    private LinearLayout btn_comment;
     String title, theme, time;
     int star_num;
 
@@ -20,6 +22,7 @@ public class StoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_story);
 
+        btn_comment = findViewById(R.id.btn_comment);
         // intent 값 얻어오기
         Intent intent = getIntent();
         title = intent.getStringExtra("title");
@@ -59,6 +62,16 @@ public class StoryActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        btn_comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(StoryActivity.this, CommentActivity.class);
+                intent.putExtra("title", title);
+                finish();
+                startActivity(intent);
+            }
+        });
+
 
         // 게임 시작하기 및 타이머 시작
         gamestart = (Button)findViewById(R.id.gamestart);
