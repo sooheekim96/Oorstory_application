@@ -1,38 +1,51 @@
 package com.example.oorstory;
 
-import android.app.Activity;
+import android.app.AutomaticZenRule;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
-import android.net.Uri;
 import android.os.Build;
+import android.os.Handler;
 import android.os.IBinder;
-import android.provider.Settings;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 
-import android.os.Bundle;
+import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.core.app.NotificationCompat;
+
+import java.util.Locale;
 
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import static android.view.WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
-import static android.view.WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
-import static android.view.WindowManager.LayoutParams.TYPE_PHONE;
-import static com.example.oorstory.TimerNotification.CHANNEL_1_ID;
+import static com.example.oorstory.Notification.CHANNEL_1_ID;
+import static com.example.oorstory.Notification.CHANNEL_2_ID;
 
 public class StopWatchService extends Service  {
 
     private WindowManager windowManager;
     private View floatingView;
     private String title;
+    private TextView textTime;
+    private ImageButton gamestart;
+
+    /*StopWatch watch = new StopWatch();
+    final int REFRESH_RATE = 100;*/
+
+    private int seconds = 0;
+    private boolean running = true;
+    private String time;
+    private boolean wasRunning;
 
     public StopWatchService() {
 
@@ -44,28 +57,17 @@ public class StopWatchService extends Service  {
     }
 
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
+    public int onStartCommand(Intent intent, int flags, int startId)
+    {
 
         if(intent == null){
             return Service.START_STICKY;
         }else {
 
-            //StoryActivity에서 title 정보 가져오기
             title = intent.getStringExtra("title");
-
-            Intent notificationIntent = new Intent(this, StoryActivity.class);
-            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-
-            Notification notification = new Notification.Builder(this, CHANNEL_1_ID )
-                    .setContentTitle(title)
-                    .setSmallIcon(R.drawable.ic_timer)
-                    .setContentIntent(pendingIntent)
-                    .build();
-
-            startForeground(3, notification);
+            runTimer();
 
             //View 만들기
-
             floatingView = LayoutInflater.from(this).inflate(R.layout.activity_stop_watch_floating_view, null);
             floatingView.setBackgroundColor(Color.TRANSPARENT);
 
@@ -130,20 +132,43 @@ public class StopWatchService extends Service  {
 
             });
 
-            //remove the view and stop this service when the view clicked
+            //remove the view
             floatingView.findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener(){
 
                 @Override
                 public void onClick(View view) {
                     windowManager.removeView(floatingView);
+                    //stopSelf();
+                }
+            });
+
+            floatingView.findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener(){
+
+                @Override
+                public void onClick(View view) {
+                    windowManager.removeView(floatingView);
+                    //stopSelf();
+                }
+            });
+
+            floatingView.findViewById(R.id.notiArrived).setOnClickListener(new View.OnClickListener(){
+
+                @Override
+                public void onClick(View view) {
+                    windowManager.removeView(floatingView);
+
+                    final Intent intentLocal = new Intent();
+                    intentLocal.setAction("activateButton");
+                    sendBroadcast(intentLocal);
+
                     stopSelf();
                 }
             });
 
+
+
+
         }
-
-
-
         return START_NOT_STICKY;
     }
 
@@ -152,4 +177,60 @@ public class StopWatchService extends Service  {
         super.onCreate();
     }
 
+    private void runTimer()
+    {
+        /*final Intent intentLocal = new Intent();
+        intentLocal.setAction("StopWatch");*/
+
+        final Handler handler = new Handler();
+
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                int hours = seconds / 3600;
+                int minutes = (seconds % 3600) / 60;
+                int secs = seconds % 60;
+
+                time = String.format(Locale.getDefault(), "%d:%02d:%02d",
+                                            hours, minutes, secs);
+
+                // If running is true, increment the
+                // seconds variable.
+                if (running) {
+                    seconds++;
+                }
+
+                NotificationUpdate(time);
+                //display time
+                textTime = (TextView)floatingView.findViewById(R.id.textViewTime) ;
+                textTime.setText(time);
+
+                // Post the code again
+                // with a delay of 1 second.
+                handler.postDelayed(this, 1000);
+
+               /* intentLocal.putExtra("elapsedTime", time);
+                sendBroadcast(intentLocal);*/
+
+            }
+
+        });
+    }
+
+    public void NotificationUpdate(String time){
+
+        Intent notificationIntent = new Intent(this, StoryActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+
+        Notification notification = new Notification.Builder(this, CHANNEL_1_ID )
+                .setContentTitle(title)
+                .setContentText("Time elapsed : " + time)
+                .setSmallIcon(R.drawable.ic_timer)
+                .setOnlyAlertOnce(true)
+                .setContentIntent(pendingIntent)
+                .build();
+
+        startForeground(3, notification);
+
+    }
 }

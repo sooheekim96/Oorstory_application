@@ -1,7 +1,10 @@
 package com.example.oorstory;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,7 +18,7 @@ import android.widget.TextView;
 
 public class StoryActivity extends AppCompatActivity {
     private String userLocation;
-    private Button gamestart;
+    private ImageButton gamestart;
     String title, theme, time;
     int star_num;
 
@@ -65,7 +68,7 @@ public class StoryActivity extends AppCompatActivity {
         });
 
         // 게임 시작하기 및 타이머 시작
-        gamestart = (Button)findViewById(R.id.gamestart);
+        gamestart = (ImageButton)findViewById(R.id.imageButton5);
         gamestart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,9 +84,26 @@ public class StoryActivity extends AppCompatActivity {
                 Intent intent = new Intent(StoryActivity.this, StopWatchService.class);
                 intent.putExtra("title", title);
                 startService(intent);
+
+                gamestart.setEnabled(false);
             }
 
         });
+
+       //After stop the service, activate Button
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("activateButton");
+
+        BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                gamestart.setEnabled(true);
+
+            }
+        };
+        registerReceiver(broadcastReceiver, intentFilter);
+
+
     }
 
     // 카브뷰 펼치기/접기 이벤트
@@ -109,4 +129,8 @@ public class StoryActivity extends AppCompatActivity {
     public void mapIcon_onClick(View view){
         Log.e("맵 아이콘 클릭", "맵 아이콘 클릭");
     }
+
+
+
+
 }
