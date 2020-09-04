@@ -198,17 +198,15 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <Button
-                android:id="@+id/gamestart"
+            <ProgressBar
+                android:id="@+id/determinateBar"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:progressDrawable="@drawable/drawable_square_green"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="#171B1B1B"
-                android:text="Game Start"
-                android:textColor="@android:color/black"
-                android:textSize="18sp" />
+                android:progress="25" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"

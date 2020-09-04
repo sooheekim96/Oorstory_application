@@ -21,7 +21,6 @@
             android:layout_width="371dp"
             android:layout_height="270dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="0"
             android:layout_marginRight="10dp"
             app:srcCompat="@drawable/drawable_rectangle_gray" />
 
@@ -40,7 +39,7 @@
     </FrameLayout>
 
     <TextView
-        android:id="@+id/destination"
+        android:id="@+id/storyTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -88,11 +87,9 @@
         android:layout_marginEnd="147dp"
         android:layout_marginRight="-118dp"
         android:layout_marginBottom="250dp"
-        android:layout_toLeftOf="@id/textView2"
         android:text="TextView"
         android:textColor="#000"
         android:textSize="24sp"
-        app:layout_constraintStart_toEndOf="@+id/textView2"
         tools:layout_editor_absoluteY="502dp"
         tools:text="가고 있는 중" />
 

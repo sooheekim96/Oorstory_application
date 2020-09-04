@@ -147,7 +147,4 @@ public class StoryActivity extends AppCompatActivity {
         Log.e("맵 아이콘 클릭", "맵 아이콘 클릭");
     }
 
-
-
-
 }
