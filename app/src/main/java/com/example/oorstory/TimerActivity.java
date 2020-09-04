@@ -22,7 +22,7 @@ import androidx.core.app.NotificationManagerCompat;
 
 import java.util.concurrent.TimeUnit;
 
-import static com.example.oorstory.TimerNotification.CHANNEL_1_ID;
+import static com.example.oorstory.Notification.CHANNEL_1_ID;
 
 public class TimerActivity extends AppCompatActivity implements View.OnClickListener {
     private NotificationCompat.Builder notification;

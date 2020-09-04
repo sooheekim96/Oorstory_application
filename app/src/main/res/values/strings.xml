@@ -2,4 +2,10 @@
     <string name="app_name">OorStory</string>
     <string name="hint_minute">Minute</string>
     <string name="message_minutes">Please Enter Minutes...</string>
+    <string name="timestamp">TimeStamp</string>
+    <string name="arrived">arrived!</string>
+    <string name="story">스토리 타이틀</string>
+    <string name="place">목표 장소</string>
+    <string name="mission">미션 제목</string>
+    <string name="mission_description">미션 내용</string>
 </resources>

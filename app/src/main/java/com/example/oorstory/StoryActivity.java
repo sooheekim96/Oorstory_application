@@ -1,7 +1,14 @@
 package com.example.oorstory;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -12,8 +19,8 @@ import android.widget.TextView;
 
 public class StoryActivity extends AppCompatActivity {
     private String userLocation;
-    private Button gamestart;
     private LinearLayout btn_comment;
+    private ImageButton gamestart;
     String title, theme, time;
     int star_num;
 
@@ -74,16 +81,41 @@ public class StoryActivity extends AppCompatActivity {
 
 
         // 게임 시작하기 및 타이머 시작
-        gamestart = (Button)findViewById(R.id.gamestart);
+        gamestart = (ImageButton)findViewById(R.id.imageButton5);
         gamestart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(
-                        getApplicationContext(),
-                        TimerActivity.class); // 다음 넘어갈 클래스 지정
-                startActivity(intent); // 다음 화면으로 넘어간다
+
+                //다른 앱 위에 그리기 허용 확인
+                if(Build.VERSION.SDK_INT >= 23) {
+                    if (!Settings.canDrawOverlays(StoryActivity.this)) {
+                        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                                Uri.parse("package:" + getPackageName()));
+                        startActivity(intent);
+                    }
+                }
+                Intent intent = new Intent(StoryActivity.this, StopWatchService.class);
+                intent.putExtra("title", title);
+                startService(intent);
+
+                gamestart.setEnabled(false);
             }
+
         });
+
+       //After stop the service, activate Button
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("activateButton");
+
+        BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                gamestart.setEnabled(true);
+
+            }
+        };
+        registerReceiver(broadcastReceiver, intentFilter);
+
 
     }
 
@@ -114,4 +146,8 @@ public class StoryActivity extends AppCompatActivity {
     public void mapIcon_onClick(View view){
         Log.e("맵 아이콘 클릭", "맵 아이콘 클릭");
     }
+
+
+
+
 }
