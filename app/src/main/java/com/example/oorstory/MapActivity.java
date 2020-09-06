@@ -25,7 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener {
     private GoogleMap mMap;
     private String story_title;
     private HashMap<String, Double[]> locations;
@@ -66,16 +66,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
 
         // mainActivity로 돌아가기
-        ImageButton back_btn = findViewById(R.id.back_btn_toMain);
-        back_btn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view)
-            {
-                Intent intent = new Intent(MapActivity.this, MainActivity.class);
-                finish();
-                startActivity(intent);
-            }
-        });
+        findViewById(R.id.back_btn_toMain).setOnClickListener(this);
     }
 
     @Override
@@ -147,5 +138,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         intent.putExtra("time", time.toString());
         intent.putExtra("star_num", star_num+""); // 별 개수
         startActivity(intent);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.back_btn_toMain :
+                finish();
+                break;
+        }
     }
 }

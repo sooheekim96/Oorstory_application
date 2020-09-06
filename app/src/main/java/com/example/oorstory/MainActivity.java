@@ -39,6 +39,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ArrayList<RecyclerItem> mList_hist = new ArrayList<RecyclerItem>();
     ArrayList<RecyclerItem> mList_nature = new ArrayList<RecyclerItem>();
 
+    private final long FINISH_INTERVAL_TIME = 2000;
+    private long backPressedTime = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -187,9 +190,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.location_LL:
                 intent = new Intent(MainActivity.this, LocationActivity.class);
-                this.finish();
+                // this.finish();
                 startActivity(intent);
                 break;
         }
     }
+
+    // 뒤로가기 두번 클릭시 (2초 내) 어플 종료하기
+   @Override
+    public void onBackPressed() {
+        long tempTime = System.currentTimeMillis();
+        long intervalTime = tempTime - backPressedTime;
+
+        if (0 <= intervalTime && FINISH_INTERVAL_TIME >= intervalTime) {
+            super.onBackPressed();
+        } else {
+            backPressedTime = tempTime;
+            Toast.makeText(getApplicationContext(), "\'뒤로\' 버튼을 한번 더 누르면 종료합니다.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }

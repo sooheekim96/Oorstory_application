@@ -52,9 +52,9 @@ public class CommentActivity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-                Intent intent = new Intent(CommentActivity.this, MapActivity.class);
+                //Intent intent = new Intent(CommentActivity.this, MapActivity.class);
                 finish();
-                startActivity(intent);
+                //startActivity(intent);
             }
         });
     }
