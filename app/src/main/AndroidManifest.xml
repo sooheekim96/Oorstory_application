@@ -19,21 +19,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".SplashActivity"/>
+        <activity android:name=".MyRoomActivity"></activity>
+        <activity android:name=".SplashActivity" />
         <activity android:name=".StoryActivity" />
         <activity android:name=".MapActivity" />
         <activity android:name=".LocationActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PrologueActivity"/>
+        <activity android:name=".PrologueActivity" />
         <activity android:name=".SignupActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".SettingActivity" />
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".MainActivity" />
         <activity android:name=".TimerActivity" />
         <activity android:name=".CommentActivity" />
 
