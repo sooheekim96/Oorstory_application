@@ -17,12 +17,23 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.skt.Tmap.TMapTapi;
+import com.skt.Tmap.TMapView;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+
 public class StoryActivity extends AppCompatActivity {
     private String userLocation;
     private LinearLayout btn_comment;
     private ImageButton gamestart;
     String title, theme, time;
     int star_num;
+
+    private Intent activityToStart;
+    TMapTapi tMapTapi;
+    private TMapView mMapView = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,13 +91,27 @@ public class StoryActivity extends AppCompatActivity {
         });
 
 
-        // 게임 시작하기 및 타이머 시작
+        // 게임 시작하기 및 타이머 시작 + Tmap
         gamestart = (ImageButton)findViewById(R.id.imageButton5);
+        activityToStart = new Intent(getApplicationContext(), TmapConnectActivity.class);
+        tMapTapi = new TMapTapi(this);
+        // mMapView = new TMapView(this);
+
+        configureApp();
+        setOnAuthentication();
+
         gamestart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                //다른 앱 위에 그리기 허용 확인
+                boolean istMapApp = tMapTapi.isTmapApplicationInstalled();
+                if (istMapApp == false) {
+                    Log.e("test", "Tmap uninstalled");
+                    tMapInstall();
+                }
+                invokeRoute();
+
+                /* //다른 앱 위에 그리기 허용 확인 및 타이머
                 if(Build.VERSION.SDK_INT >= 23) {
                     if (!Settings.canDrawOverlays(StoryActivity.this)) {
                         Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
@@ -94,16 +119,18 @@ public class StoryActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                 }
+
+                //StopWatchService
                 Intent intent = new Intent(StoryActivity.this, StopWatchService.class);
                 intent.putExtra("title", title);
                 startService(intent);
 
-                gamestart.setEnabled(false);
+                gamestart.setEnabled(false);*/
             }
 
         });
 
-       //After stop the service, activate Button
+       /*//After stop the service, activate Button
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("activateButton");
 
@@ -114,7 +141,7 @@ public class StoryActivity extends AppCompatActivity {
 
             }
         };
-        registerReceiver(broadcastReceiver, intentFilter);
+        registerReceiver(broadcastReceiver, intentFilter);*/
 
 
     }
@@ -145,6 +172,55 @@ public class StoryActivity extends AppCompatActivity {
     // 외부 지도 어플로 연결, 목적지 정보 전달하기
     public void mapIcon_onClick(View view){
         Log.e("맵 아이콘 클릭", "맵 아이콘 클릭");
+    }
+
+    // API 설정
+    private void configureApp() {
+        tMapTapi.setSKTMapAuthentication("l7xx52f0ddca01254d8ea145afec7db48ab6");
+    }
+
+    private void setOnAuthentication(){
+        tMapTapi.setOnAuthenticationListener(new TMapTapi.OnAuthenticationListenerCallback() {
+            @Override
+            public void SKTMapApikeySucceed() {
+                Log.d("test", "성공");
+            }
+
+            @Override
+            public void SKTMapApikeyFailed(String errorMsg) {
+                Log.d("test", "실패");
+            }
+        });
+    }
+
+    //이륜차 주행 길안내
+    public void invokeRoute(){
+        HashMap pathInfo = new HashMap();
+        pathInfo.put("rGoName", "T타워");
+        pathInfo.put("rGoX", "126.985302");
+        pathInfo.put("rGoY", "37.570841");
+
+        pathInfo.put("rStName", "출발지");
+        pathInfo.put("rStX", "126.926252");
+        pathInfo.put("rStY", "37.557607");
+
+        pathInfo.put("rV1Name", "경유지");
+        pathInfo.put("rV1X", "126.976867");
+        pathInfo.put("rV1Y", "37.576016");
+        pathInfo.put("rSOpt", "6");
+        tMapTapi.invokeRoute(pathInfo);
+    }
+
+    public void tMapInstall() {
+        new Thread() {
+            @Override
+            public void run() {
+                Uri uri = Uri.parse(tMapTapi.getTMapDownUrl().get(0));
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+
+        }.start();
     }
 
 }

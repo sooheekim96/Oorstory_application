@@ -76,8 +76,8 @@ public class MainActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
                 Toast.makeText(MainActivity.this, "" + parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
-                ((TextView) parent.getChildAt(0)).setTextColor(Color.BLACK);
-                ((TextView) parent.getChildAt(0)).setGravity(Gravity.RIGHT);
+                //((TextView) parent.getChildAt(0)).setTextColor(Color.BLACK);
+                //((TextView) parent.getChildAt(0)).setGravity(Gravity.RIGHT);
             }
 
             @Override
