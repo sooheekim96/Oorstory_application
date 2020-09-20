@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory app:title="계정">
+        <Preference
+            android:layout="@layout/preferences"
+            app:key="image"
+            app:title="프로필 이미지 변경" />
+        <EditTextPreference
+            android:layout="@layout/preferences"
+            app:key="nickname"
+            app:title="닉네임 변경"
+            android:dialogTitle="닉네임 변경"
+            android:summary=""/>
+        <Preference
+            android:layout="@layout/preferences"
+            app:key="logout"
+            app:title="로그 아웃" />
+        <Preference
+            android:layout="@layout/preferences"
+            app:key="signout"
+            app:title="회원 탈퇴"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="앱정보">
+        <Preference
+            android:layout="@layout/preferences"
+            app:title="@string/app_name"
+            app:summary="일상에서도, 가까운 관광지 여행에서도 자전거를 이용하고자 하는 사람들에게 재미를 주고자 합니다."/>
+        <Preference
+            android:layout="@layout/preferences"
+            app:key="opensource"
+            app:title="오픈소스 라이선스"/>
+        <Preference
+            android:layout="@layout/preferences"
+            app:key="feedback"
+            app:summary="Report technical issues or suggest new features"
+            app:title="피드백 보내기"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>
