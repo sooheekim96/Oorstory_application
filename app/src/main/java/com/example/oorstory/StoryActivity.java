@@ -111,7 +111,7 @@ public class StoryActivity extends AppCompatActivity {
                 }
                 invokeRoute();
 
-                /* //다른 앱 위에 그리기 허용 확인 및 타이머
+                //다른 앱 위에 그리기 허용 확인 및 타이머
                 if(Build.VERSION.SDK_INT >= 23) {
                     if (!Settings.canDrawOverlays(StoryActivity.this)) {
                         Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
@@ -123,14 +123,18 @@ public class StoryActivity extends AppCompatActivity {
                 //StopWatchService
                 Intent intent = new Intent(StoryActivity.this, StopWatchService.class);
                 intent.putExtra("title", title);
-                startService(intent);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    startForegroundService(intent);
+                } else {
+                    startService(intent);
+                }
 
-                gamestart.setEnabled(false);*/
+                gamestart.setEnabled(false);
             }
 
         });
 
-       /*//After stop the service, activate Button
+       //After stop the service, activate Button
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("activateButton");
 
@@ -141,9 +145,7 @@ public class StoryActivity extends AppCompatActivity {
 
             }
         };
-        registerReceiver(broadcastReceiver, intentFilter);*/
-
-
+        registerReceiver(broadcastReceiver, intentFilter);
     }
 
     // 카브뷰 펼치기/접기 이벤트
@@ -176,7 +178,7 @@ public class StoryActivity extends AppCompatActivity {
 
     // API 설정
     private void configureApp() {
-        tMapTapi.setSKTMapAuthentication("l7xx52f0ddca01254d8ea145afec7db48ab6");
+        tMapTapi.setSKTMapAuthentication(getString(R.string.map_api));
     }
 
     private void setOnAuthentication(){

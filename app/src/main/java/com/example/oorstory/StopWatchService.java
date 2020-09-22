@@ -13,6 +13,7 @@ import android.graphics.PixelFormat;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -29,7 +30,6 @@ import java.util.Locale;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import static android.view.WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
 import static com.example.oorstory.Notification.CHANNEL_1_ID;
-import static com.example.oorstory.Notification.CHANNEL_2_ID;
 
 public class StopWatchService extends Service  {
 
@@ -51,13 +51,15 @@ public class StopWatchService extends Service  {
 
     }
 
+
+
     @Override
     public IBinder onBind(Intent intent) {
         return null;
     }
 
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId)
+    public int onStartCommand(Intent intent, int flags, final int startId)
     {
 
         if(intent == null){
@@ -142,31 +144,31 @@ public class StopWatchService extends Service  {
                 }
             });
 
-            floatingView.findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener(){
-
-                @Override
-                public void onClick(View view) {
-                    windowManager.removeView(floatingView);
-                    //stopSelf();
-                }
-            });
-
+            //도착 버튼 클릭 시, 기존 앱으로 돌아오기
             floatingView.findViewById(R.id.notiArrived).setOnClickListener(new View.OnClickListener(){
 
                 @Override
                 public void onClick(View view) {
-                    windowManager.removeView(floatingView);
 
+                    //게임 시작 버튼 활성화
                     final Intent intentLocal = new Intent();
                     intentLocal.setAction("activateButton");
                     sendBroadcast(intentLocal);
 
+                    //Tmap 실행 후 기본앱으로 돌아오기 -- tmap은 종료 API x => 강제종료?밖에 답이 없나?
+                    Intent dialogIntent  = new Intent(getApplicationContext(), LocationCheckingActivity.class);
+                    dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(dialogIntent);
+
+                    // 창닫기
+                    windowManager.removeView(floatingView);
+
+                    stopForeground(true);
                     stopSelf();
+
+
                 }
             });
-
-
-
 
         }
         return START_NOT_STICKY;
@@ -222,15 +224,15 @@ public class StopWatchService extends Service  {
         Intent notificationIntent = new Intent(this, StoryActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
-        Notification notification = new Notification.Builder(this, CHANNEL_1_ID )
+        Notification notification = new Notification.Builder(this, CHANNEL_1_ID)
                 .setContentTitle(title)
                 .setContentText("Time elapsed : " + time)
                 .setSmallIcon(R.drawable.ic_timer)
                 .setOnlyAlertOnce(true)
                 .setContentIntent(pendingIntent)
                 .build();
-
+        Log.e("msg", "build");
         startForeground(3, notification);
-
+        Log.e("msg", "startforeground");
     }
 }
