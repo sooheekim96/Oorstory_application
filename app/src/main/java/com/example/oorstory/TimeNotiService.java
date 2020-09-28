@@ -1,5 +1,10 @@
 package com.example.oorstory;
 
+/*
+게임 시작시간을 사용자가 선택할 수 있다
+티맵 설치 안내 및 실행
+ */
+
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -9,6 +14,7 @@ import android.graphics.PixelFormat;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -24,67 +30,94 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import static android.view.WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
 import static com.example.oorstory.Notification.CHANNEL_1_ID;
 
-/*
-임시적으로 사용하지 않는 서비스
+public class TimeNotiService extends Service {
 
- */
-public class StopWatchService extends Service  {
-
+    //floatingview
     private WindowManager windowManager;
     private View floatingView;
     private String title;
     private TextView textTime;
 
+    //runtimer
     private int seconds = 0;
     private boolean running = true;
     private String time;
-
-    @Override
-    public void onCreate(){
-        super.onCreate();
-         /*
-            움직일 수 있는 플로팅 뷰 띄우기
-         */
-        setView();
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, final int startId)
-    {
-        if(intent == null){
-            return Service.START_STICKY;
-        }else {
-
-            title = intent.getStringExtra("title");
-            runTimer();
-
-            ManageView();
-
-            /*
-            도착 버튼 클릭 시, 서비스 종료 및 기존 앱으로 돌아가기
-             */
-            floatingView.findViewById(R.id.notiArrived).setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View view) {
-                    BackToApp();
-                }
-            });
-        }
-        return START_NOT_STICKY;
-    }
 
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return null;
     }
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        UpdateNotification("게임을 시작합니다.");
+        setView();
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+
+        if(intent == null){
+            return Service.START_STICKY;
+        }else {
+            title  = intent.getStringExtra("title");
+            ManageView();
+            /*
+            도착 버튼 클릭 시, 서비스 종료 및 기존 앱으로 돌아가기
+             */
+            /*floatingView.findViewById(R.id.notiArrived).setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {
+                    BackToApp();
+                }
+            });*/
+
+            //시작버튼을 누르면 스톱워치가 시작함
+            floatingView.findViewById(R.id.notiStart).setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {
+                    runTimer();
+                    windowManager.removeView(floatingView);
+                }
+            });
+            return Service.START_NOT_STICKY;
+        }
+    }
+
+    //메인 스레드
+    final Handler handler = new Handler();
+    //워킹 스레드
+    final Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            int hours = seconds / 3600;
+            int minutes = (seconds % 3600) / 60;
+            int secs = seconds % 60;
+
+            time = String.format(Locale.getDefault(), "%d:%02d:%02d",
+                    hours, minutes, secs);
+
+
+            if (running) {
+                seconds++;
+            }
+            Log.e("seconds", time);
+            UpdateNotification("게임을 시작합니다.");
+
+            // Post the code again
+            // with a delay of 1 second.
+            handler.postDelayed(this, 1000);
+
+        }
+
+    };
 
     private void runTimer()
     {
         handler.post(runnable);
     }
-
-    public void NotificationUpdate(String time){
+    public void UpdateNotification(String time){
 
         Intent notificationIntent = new Intent(this, StoryActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
@@ -93,23 +126,21 @@ public class StopWatchService extends Service  {
                 .setContentTitle(title)
                 .setContentText("Time elapsed : " + time)
                 .setSmallIcon(R.drawable.ic_timer)
-                .setOnlyAlertOnce(true)
                 .setContentIntent(pendingIntent)
                 .build();
 
-        startForeground(1, notification);
-
+        startForeground(5, notification);
     }
 
     public void setView() {
-        floatingView = LayoutInflater.from(this).inflate(R.layout.activity_stop_watch_floating_view, null);
+        floatingView = LayoutInflater.from(this).inflate(R.layout.activity_gamestart_floating_view, null);
         floatingView.setBackgroundColor(Color.TRANSPARENT);
 
         int LAYOUT_FLAG;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             LAYOUT_FLAG = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
         } else {
-            LAYOUT_FLAG = WindowManager.LayoutParams.TYPE_PHONE;
+            LAYOUT_FLAG = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
         }
 
         final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
@@ -169,12 +200,11 @@ public class StopWatchService extends Service  {
         storyTitle.setText(title);
 
         //remove the view by cancel button
-        floatingView.findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener(){
+        floatingView.findViewById(R.id.notiStart).setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View view) {
                 windowManager.removeView(floatingView);
-                //stopSelf();
             }
         });
     }
@@ -197,40 +227,4 @@ public class StopWatchService extends Service  {
         stopSelf();
         handler.removeCallbacks(runnable);
     }
-
-
-
-    //메인 스레드
-    final Handler handler = new Handler();
-    //워킹 스레드
-    final Runnable runnable = new Runnable() {
-        @Override
-        public void run() {
-            int hours = seconds / 3600;
-            int minutes = (seconds % 3600) / 60;
-            int secs = seconds % 60;
-
-            time = String.format(Locale.getDefault(), "%d:%02d:%02d",
-                    hours, minutes, secs);
-
-            if (running) {
-                seconds++;
-            }
-
-            NotificationUpdate(time);
-
-            textTime = (TextView)floatingView.findViewById(R.id.textViewTime) ;
-            textTime.setText(time);
-
-            // Post the code again
-            // with a delay of 1 second.
-            handler.postDelayed(this, 1000);
-
-               /* intentLocal.putExtra("elapsedTime", time);
-                sendBroadcast(intentLocal);*/
-                /*final Intent intentLocal = new Intent();
-                intentLocal.setAction("StopWatch");*/
-        }
-
-    };
 }

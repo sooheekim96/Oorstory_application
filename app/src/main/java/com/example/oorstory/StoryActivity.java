@@ -11,18 +11,14 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.skt.Tmap.TMapTapi;
-import com.skt.Tmap.TMapView;
-
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
+
 
 public class StoryActivity extends AppCompatActivity {
     private String userLocation;
@@ -31,9 +27,7 @@ public class StoryActivity extends AppCompatActivity {
     String title, theme, time;
     int star_num;
 
-    private Intent activityToStart;
     TMapTapi tMapTapi;
-    private TMapView mMapView = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,46 +79,43 @@ public class StoryActivity extends AppCompatActivity {
             }
         });
 
-        // 게임 시작하기 및 타이머 시작
-        gamestart = (ImageButton)findViewById(R.id.imageButton5);
-        activityToStart = new Intent(getApplicationContext(), TmapConnectActivity.class);
+
+        // 게임 시작하기 및 타이머 시작 + Tmap
+        gamestart = (ImageButton)findViewById(R.id.gameStart);
         tMapTapi = new TMapTapi(this);
-        // mMapView = new TMapView(this);
 
         configureApp();
         setOnAuthentication();
 
-        gamestart.setOnClickListener(new View.OnClickListener() {
+        gamestart.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
 
-                boolean istMapApp = tMapTapi.isTmapApplicationInstalled();
-                if (istMapApp == false) {
-                    Log.e("test", "Tmap uninstalled");
-                    tMapInstall();
-                }
-                invokeRoute();
+                checkSDKVersion();
+                //다른 앱 위에 그리기 허용 확인
+                if(checkSDKVersion()) {
 
-                /* //다른 앱 위에 그리기 허용 확인 및 타이머
-                if(Build.VERSION.SDK_INT >= 23) {
-                    if (!Settings.canDrawOverlays(StoryActivity.this)) {
-                        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                                Uri.parse("package:" + getPackageName()));
-                        startActivity(intent);
+                    //Start TimeNotiService:
+                    Intent serviceIntent = new Intent(StoryActivity.this, StopWatchService.class);
+                    serviceIntent.putExtra("title", title);
+                    ServiceStart(serviceIntent);
+
+                    //TMAP 미설치 시 설치 안내
+                    boolean istMapApp = tMapTapi.isTmapApplicationInstalled();
+                    if (istMapApp == false) {
+                        Log.e("test", "Tmap uninstalled");
+                        tMapInstall();
+                        invokeRoute();
+                    }else{
+                        invokeRoute();
+                        gamestart.setEnabled(false);
                     }
+
                 }
-
-                //StopWatchService
-                Intent intent = new Intent(StoryActivity.this, StopWatchService.class);
-                intent.putExtra("title", title);
-                startService(intent);
-
-                gamestart.setEnabled(false);*/
             }
-
         });
 
-       /*//After stop the service, activate Button
+       //게임 끝내기, 버튼 재활성화
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("activateButton");
 
@@ -132,10 +123,9 @@ public class StoryActivity extends AppCompatActivity {
             @Override
             public void onReceive(Context context, Intent intent) {
                 gamestart.setEnabled(true);
-
             }
         };
-        registerReceiver(broadcastReceiver, intentFilter);*/
+        registerReceiver(broadcastReceiver, intentFilter);
 
 
     }
@@ -170,7 +160,7 @@ public class StoryActivity extends AppCompatActivity {
 
     // API 설정
     private void configureApp() {
-        tMapTapi.setSKTMapAuthentication("l7xx52f0ddca01254d8ea145afec7db48ab6");
+        tMapTapi.setSKTMapAuthentication(getString(R.string.map_api));
     }
 
     private void setOnAuthentication(){
@@ -215,6 +205,33 @@ public class StoryActivity extends AppCompatActivity {
             }
 
         }.start();
+    }
+
+    public boolean checkSDKVersion(){
+        Log.e("msg", "들어옴");
+        if(Build.VERSION.SDK_INT >= 23) {
+            if (!Settings.canDrawOverlays(StoryActivity.this)) {
+                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                        Uri.parse("package:" + getPackageName()));
+                Log.e("msg", "허용안됨");
+                startActivityForResult(intent, 1);
+                return false;
+            }
+            else{ return true; }
+        }else{ return true; }
+    }
+
+    private void ServiceStart(Intent serviceIntent){
+        //서비스 시작하기 (SDK에 따라 호출함수 달라짐)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (serviceIntent!=null) {
+                Log.e("startForegroundService", "start");
+                startForegroundService(serviceIntent);
+            }
+        } else {
+            Log.e("startService", "start");
+            startService(serviceIntent);
+        }
     }
 
 }

@@ -6,6 +6,13 @@
     <string name="arrived">arrived!</string>
     <string name="story">스토리 타이틀</string>
     <string name="place">목표 장소</string>
-    <string name="mission">미션 제목</string>
+    <string name="mission">미션 타이틀</string>
     <string name="mission_description">미션 내용</string>
+    <string name="map_api">l7xx52f0ddca01254d8ea145afec7db48ab6</string>
+    <string name="locationchecking">위치 확인 중입니다</string>
+    <string name="geofence_transition_invalid_type">Geofence transition error: invalid transition type %1$d</string>
+    <string name="geofence_transition_notification_text">notification text</string>
+    <string name="geofence_transition_entered">geofence_transition_entered</string>
+    <string name="geofence_transition_exited">geofence_transition_exited</string>
+    <string name="unknown_geofence_transition">unknown_geofence_transition</string>
 </resources>
