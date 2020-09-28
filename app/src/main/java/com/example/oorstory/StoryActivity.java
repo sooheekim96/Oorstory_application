@@ -72,12 +72,7 @@ public class StoryActivity extends AppCompatActivity {
             public void onClick(View view)
             {
                 Intent intent = new Intent(StoryActivity.this, MapActivity.class);
-                intent.putExtra("title", title);
-                intent.putExtra("theme", theme);
-                intent.putExtra("time", time);
-                intent.putExtra("star_num", star_num+""); // 별 개수
                 finish();
-                startActivity(intent);
             }
         });
         btn_comment.setOnClickListener(new View.OnClickListener() {
@@ -85,13 +80,12 @@ public class StoryActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(StoryActivity.this, CommentActivity.class);
                 intent.putExtra("title", title);
-                finish();
+                //finish();
                 startActivity(intent);
             }
         });
 
-
-        // 게임 시작하기 및 타이머 시작 + Tmap
+        // 게임 시작하기 및 타이머 시작
         gamestart = (ImageButton)findViewById(R.id.imageButton5);
         activityToStart = new Intent(getApplicationContext(), TmapConnectActivity.class);
         tMapTapi = new TMapTapi(this);

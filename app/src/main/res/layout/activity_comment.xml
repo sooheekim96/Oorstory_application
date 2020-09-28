@@ -75,7 +75,8 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:textColor="#000"
-                android:text="댓글을 입력하세요"/>
+                android:textColorHint="#032149"
+                android:hint="댓글을 입력하세요."/>
 
             <Button
                 android:id="@+id/commentButton"
