@@ -253,7 +253,7 @@
                             android:textColor="@android:color/black" />
 
                         <ImageButton
-                            android:id="@+id/imageButton5"
+                            android:id="@+id/gameStart"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             android:layout_margin="5dp"

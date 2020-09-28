@@ -6,28 +6,22 @@ import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.google.android.gms.location.Geofence;
-import com.google.android.gms.location.GeofenceStatusCodes;
 import com.google.android.gms.location.GeofencingClient;
-import com.google.android.gms.location.GeofencingEvent;
 import com.google.android.gms.location.GeofencingRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.skt.Tmap.TMapGpsManager;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.content.ContentValues.TAG;
-import com.google.android.gms.location.GeofenceStatusCodes;
 
 public class LocationCheckingActivity extends AppCompatActivity {
 
@@ -84,6 +78,7 @@ public class LocationCheckingActivity extends AppCompatActivity {
         }
 
         //지오펜싱리스트 추가
+        //알 수 없는 오류 코드로 addGeofences 실행 불가 => 원인을 더 찾아보고 안 되면 다른 api 사용 고려
         geofencingClient.addGeofences(getGeofencingRequest(), getGeofencePendingIntent())
                 .addOnSuccessListener(this, new OnSuccessListener<Void>() {
                     @Override

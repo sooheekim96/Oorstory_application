@@ -23,7 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     ImageButton setting_btn;
     TextView place_tv, food_tv, hist_tv, nature_tv;
     RecyclerView mRecyclerView = null;
@@ -38,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<RecyclerItem> mList_food = new ArrayList<RecyclerItem>();
     ArrayList<RecyclerItem> mList_hist = new ArrayList<RecyclerItem>();
     ArrayList<RecyclerItem> mList_nature = new ArrayList<RecyclerItem>();
+
+    private final long FINISH_INTERVAL_TIME = 2000;
+    private long backPressedTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +97,9 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        findViewById(R.id.myRoom_btn).setOnClickListener(this);// open MyRoom
+        findViewById(R.id.setting_btn).setOnClickListener(this);// open setting
+        findViewById(R.id.location_LL).setOnClickListener(this);//open Location
     }
 
     public void addItem(Drawable title_pic, String title, String theme, int star, int time, boolean is_starred) {
@@ -115,19 +121,6 @@ public class MainActivity extends AppCompatActivity {
         } else if (theme.equals("자연")) {
             mList_nature.add(item);
         }
-    }
-
-    public void setting_onClick(View view) {
-        Intent intent = new Intent(MainActivity.this, SettingActivity.class);
-        // this.finish();
-        startActivity(intent);
-
-    }
-
-    public void location_onClick(View view) {
-        Intent intent = new Intent(MainActivity.this, LocationActivity.class);
-        this.finish();
-        startActivity(intent);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -181,6 +174,40 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onClick(View v) {
+        Intent intent;
+        switch (v.getId()){
+            case R.id.myRoom_btn :
+                intent = new Intent(MainActivity.this, MyRoomActivity.class);
+                // this.finish();
+                startActivity(intent);
+                break;
+            case R.id.setting_btn :
+                intent = new Intent(MainActivity.this, SettingActivity.class);
+                // this.finish();
+                startActivity(intent);
+                break;
+            case R.id.location_LL:
+                intent = new Intent(MainActivity.this, LocationActivity.class);
+                // this.finish();
+                startActivity(intent);
+                break;
+        }
+    }
 
+    // 뒤로가기 두번 클릭시 (2초 내) 어플 종료하기
+   @Override
+    public void onBackPressed() {
+        long tempTime = System.currentTimeMillis();
+        long intervalTime = tempTime - backPressedTime;
+
+        if (0 <= intervalTime && FINISH_INTERVAL_TIME >= intervalTime) {
+            super.onBackPressed();
+        } else {
+            backPressedTime = tempTime;
+            Toast.makeText(getApplicationContext(), "\'뒤로\' 버튼을 한번 더 누르면 종료합니다.", Toast.LENGTH_SHORT).show();
+        }
+    }
 
 }
