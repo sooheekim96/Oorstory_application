@@ -14,16 +14,18 @@
 
         <Button
             android:id="@+id/notiStart"
-            android:layout_width="167dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewTime"
+            android:layout_width="176dp"
+            android:layout_height="36dp"
+            android:layout_below="@+id/storyTitle"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="14dp"
-            android:layout_marginTop="5dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="73dp"
+            android:layout_marginEnd="10dp"
             android:layout_marginBottom="16dp"
             android:autoSizeTextType="uniform"
             android:gravity="center_horizontal"
-            android:text="시작하시겠습니까?"
+            android:text="스탑워치를 시작하시겠습니까?"
             android:textColor="@color/colorWhite"
             android:textSize="20sp"
             app:autoSizeTextType="uniform" />
@@ -38,19 +40,13 @@
 
         <ImageView
             android:id="@+id/circleView"
-            android:layout_width="210dp"
-            android:layout_height="210dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="0dp"
             android:src="@drawable/drawble_circle_orange" />
-
-        <TextView
-            android:id="@+id/textViewTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/storyTitle"
-            android:layout_centerInParent="true"
-            android:text="00:01:00"
-            android:textColor="@color/colorWhite"
-            android:textSize="40sp" />
 
         <TextView
             android:id="@+id/storyTitle"
@@ -58,8 +54,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="35dp"
+            android:layout_marginStart="23dp"
+            android:layout_marginTop="37dp"
             android:gravity="center_horizontal"
             android:text="스토리 타이틀"
             android:textColor="@color/colorWhite"

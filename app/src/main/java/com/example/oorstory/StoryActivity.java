@@ -171,7 +171,7 @@ public class StoryActivity extends AppCompatActivity {
                 if(checkSDKVersion()) {
 
                     //Start TimeNotiService:
-                    Intent serviceIntent = new Intent(StoryActivity.this, StopWatchService.class);
+                    Intent serviceIntent = new Intent(StoryActivity.this, TimeNotiService.class);
                     serviceIntent.putExtra("title", title);
                     ServiceStart(serviceIntent);
 
