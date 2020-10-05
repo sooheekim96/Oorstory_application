@@ -1,2 +1,4 @@
+include ':UnityCode'
+include ':unityLibrary'
 include ':app'
 rootProject.name = "Ourstory"
