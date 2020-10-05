@@ -11,8 +11,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 
-
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -32,7 +30,6 @@ import com.skt.Tmap.TMapTapi;
 import java.util.HashMap;
 
 import me.relex.circleindicator.CircleIndicator3;
-
 
 public class StoryActivity extends AppCompatActivity {
     private String userLocation;
