@@ -9,6 +9,7 @@ public abstract class StoryFragmentAdapter extends FragmentStateAdapter {
     public int mCount;
     public StoryFragmentAdapter(FragmentActivity fa, int count){
         super(fa);
+
         mCount = count;
     }
 
