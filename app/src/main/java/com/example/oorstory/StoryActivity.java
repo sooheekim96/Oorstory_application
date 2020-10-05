@@ -1,5 +1,17 @@
 package com.example.oorstory;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.ViewCompat;
+import androidx.fragment.app.Fragment;
+
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
+
+
+
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -19,11 +31,17 @@ import android.widget.TextView;
 import com.skt.Tmap.TMapTapi;
 import java.util.HashMap;
 
+import me.relex.circleindicator.CircleIndicator3;
+
 
 public class StoryActivity extends AppCompatActivity {
     private String userLocation;
     private LinearLayout btn_comment;
     private ImageButton gamestart;
+    private ViewPager2 mPager;
+    private FragmentStateAdapter pagerAdapter;
+    private int num_page = 2;
+    private CircleIndicator3 mIndicator;
     String title, theme, time;
     int star_num;
 
@@ -33,6 +51,63 @@ public class StoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_story);
+        mPager = findViewById(R.id.viewpager);
+        pagerAdapter = new StoryFragmentAdapter(this, num_page) {
+            @NonNull
+            // @Override
+            public Fragment getItem(int position) {
+                return null;
+            }
+        };
+            mPager.setAdapter(pagerAdapter);
+
+        mIndicator = findViewById(R.id.indicator);
+        mIndicator.setViewPager(mPager);
+        mIndicator.createIndicators(num_page, 0);
+
+        mPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
+        mPager.setCurrentItem(1000);
+        mPager.setOffscreenPageLimit(3);
+
+        mPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+                if (positionOffsetPixels == 0) {
+                    mPager.setCurrentItem(position);
+                }
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                mIndicator.animatePageSelected(position%num_page);
+            }
+        });
+
+
+
+        final float pageMargin = getResources().getDimensionPixelOffset(R.dimen.pageMargin);
+        final float pageOffset = getResources().getDimensionPixelOffset(R.dimen.offset);
+
+        mPager.setPageTransformer(new ViewPager2.PageTransformer() {
+            @Override
+            public void transformPage(@NonNull View page, float position) {
+                float myOffset = position *-(2*pageOffset + pageMargin);
+                if(mPager.getOrientation() == ViewPager2.ORIENTATION_HORIZONTAL){
+                    if(ViewCompat.getLayoutDirection(mPager) == ViewCompat.LAYOUT_DIRECTION_RTL){
+                        page.setTranslationX(-myOffset);
+                    } else {
+                        page.setTranslationX(myOffset);
+                    }
+                } else {
+                    page.setTranslationY(myOffset);
+                }
+            }
+        });
+
+
+
 
         btn_comment = findViewById(R.id.btn_comment);
         // intent 값 얻어오기
@@ -130,6 +205,8 @@ public class StoryActivity extends AppCompatActivity {
 
     }
 
+
+
     // 카브뷰 펼치기/접기 이벤트
     public void unfold_cardview(View view){
         TextView textView;
@@ -152,6 +229,7 @@ public class StoryActivity extends AppCompatActivity {
         if ((textView.getVisibility()+"").contains("8")) textView.setVisibility(View.VISIBLE);
         else textView.setVisibility(View.GONE);
     }
+
 
     // 외부 지도 어플로 연결, 목적지 정보 전달하기
     public void mapIcon_onClick(View view){
