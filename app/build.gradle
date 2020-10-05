@@ -12,6 +12,9 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        ndk{
+            abiFilters 'armeabi-v7a'
+        }
     }
 
     buildTypes {
@@ -43,4 +46,5 @@ dependencies {
     implementation 'com.naver.maps:map-sdk:3.7.0'
     implementation "com.android.support:support-compat:28.0.0"
     implementation 'com.google.android.libraries.places:places:2.4.0'
+    implementation project(':unityLibrary')
 }

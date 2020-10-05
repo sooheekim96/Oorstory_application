@@ -106,7 +106,7 @@
         tools:text="00:01:00" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/arrival_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
