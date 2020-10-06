@@ -29,7 +29,7 @@ import android.widget.TextView;
 import com.skt.Tmap.TMapTapi;
 import java.util.HashMap;
 
-import me.relex.circleindicator.CircleIndicator3;
+/*import me.relex.circleindicator.CircleIndicator3;*/
 
 public class StoryActivity extends AppCompatActivity {
     private String userLocation;
@@ -38,7 +38,7 @@ public class StoryActivity extends AppCompatActivity {
     private ViewPager2 mPager;
     private FragmentStateAdapter pagerAdapter;
     private int num_page = 2;
-    private CircleIndicator3 mIndicator;
+/*    private CircleIndicator3 mIndicator;*/
     String title, theme, time;
     int star_num;
 
@@ -58,9 +58,9 @@ public class StoryActivity extends AppCompatActivity {
         };
             mPager.setAdapter(pagerAdapter);
 
-        mIndicator = findViewById(R.id.indicator);
+/*        mIndicator = findViewById(R.id.indicator);
         mIndicator.setViewPager(mPager);
-        mIndicator.createIndicators(num_page, 0);
+        mIndicator.createIndicators(num_page, 0);*/
 
         mPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
         mPager.setCurrentItem(1000);
@@ -75,11 +75,11 @@ public class StoryActivity extends AppCompatActivity {
                 }
             }
 
-            @Override
+/*            @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
                 mIndicator.animatePageSelected(position%num_page);
-            }
+            }*/
         });
 
 
