@@ -7,23 +7,14 @@
     android:layout_marginBottom="8dp"
     android:layout_marginTop="8dp"
     android:layout_marginStart="?android:attr/listPreferredItemPaddingLeft"
-    android:orientation="vertical"
-    android:paddingLeft="52dp">
+    android:orientation="vertical">
     <TextView
+        style="@style/medium_text"
         android:id="@android:id/title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:paddingEnd="?android:attr/listPreferredItemPaddingRight"
-        android:textAlignment="viewStart"
-        android:textColor="#000"
-        android:textStyle="bold"
-        tools:ignore="RtlSymmetry"/>
+        android:textStyle="bold"/>
     <TextView
+        style="@style/small_text"
         android:id="@android:id/summary"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:singleLine="false"
-        android:textColor="#000"/>
+        android:singleLine="false"/>
 </LinearLayout>

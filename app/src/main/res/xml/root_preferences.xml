@@ -2,7 +2,9 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory app:title="계정">
+    <PreferenceCategory
+        app:title="계정"
+        app:iconSpaceReserved="false">
         <Preference
             android:layout="@layout/preferences"
             app:key="image"
@@ -23,7 +25,9 @@
             app:title="회원 탈퇴"/>
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="앱정보">
+    <PreferenceCategory
+        app:title="앱정보"
+        app:iconSpaceReserved="false">
         <Preference
             android:layout="@layout/preferences"
             app:title="@string/app_name"
