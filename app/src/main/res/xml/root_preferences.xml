@@ -29,6 +29,7 @@
         app:title="앱정보"
         app:iconSpaceReserved="false">
         <Preference
+            android:key="introduce"
             android:layout="@layout/preferences"
             app:title="@string/app_name"
             app:summary="일상에서도, 가까운 관광지 여행에서도 자전거를 이용하고자 하는 사람들에게 재미를 주고자 합니다."/>

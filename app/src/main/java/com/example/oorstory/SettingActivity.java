@@ -8,9 +8,15 @@ import androidx.preference.PreferenceFragmentCompat;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
+import java.io.InputStream;
+import de.psdev.licensesdialog.LicensesDialog;
+import de.psdev.licensesdialog.model.Notices;
 
 public class SettingActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -39,7 +45,10 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         private Preference opensource;
         private Preference image;
         private Preference nickname;
+        private Preference introduce;
         public SharedPreferences prefs;
+
+        int PICK_IMAGE;
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -50,6 +59,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
             opensource = findPreference("opensource");
             image = findPreference("image");
             nickname = findPreference("nickname");
+            introduce = findPreference("introduce");
 
             // 클릭 이벤트
             feedback.setOnPreferenceClickListener(this);
@@ -57,6 +67,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
             signout.setOnPreferenceClickListener(this);
             opensource.setOnPreferenceClickListener(this);
             image.setOnPreferenceClickListener(this);
+            introduce.setOnPreferenceClickListener(this);
 
             // 변경 이벤트
             nickname.setOnPreferenceChangeListener(this);
@@ -75,6 +86,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                     return false;
 
                 case "opensource":
+                    showMyLicencesDialog(getView());
                     return false;
 
                 case "feedback":
@@ -85,6 +97,19 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                     email.putExtra(Intent.EXTRA_SUBJECT, "feedback email");
                     email.putExtra(Intent.EXTRA_TEXT, "");
                     startActivity(email);
+                    return false;
+
+                case "image" :
+                    PICK_IMAGE = 100;
+                    Intent intent = new Intent(Intent.ACTION_PICK);
+                    intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
+                    startActivityForResult(intent, PICK_IMAGE);
+                    return false;
+
+                case "introduce" :
+                    String url ="https://www.notion.so/Oorstory-72129aa53e684082b189ca4a44f3432f";
+                    Intent web = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    startActivity(web);
                     return false;
 
                 default:
@@ -118,6 +143,53 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 //nickname 변경
             }
             return false;
+        }
+
+        @Override
+        public void onActivityResult(int requestCode, int resultCode, Intent data) {
+            // Check which request we're responding to
+            if (requestCode == PICK_IMAGE) {
+                // Make sure the request was successful
+                if (resultCode == RESULT_OK) {
+                    try {
+                        InputStream in = getActivity().getContentResolver().openInputStream(data.getData());
+                        Bitmap img = BitmapFactory.decodeStream(in);
+                        in.close();
+                        // 이미지뷰에 세팅
+                        //mPhotoCircleImageView.setImageBitmap(img);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
+        /*
+         * Copyright 2013 Philip Schiffer
+         *
+         *    Licensed under the Apache License, Version 2.0 (the "License");
+         *    you may not use this file except in compliance with the License.
+         *    You may obtain a copy of the License at
+         *
+         *        http://www.apache.org/licenses/LICENSE-2.0
+         *
+         *    Unless required by applicable law or agreed to in writing, software
+         *    distributed under the License is distributed on an "AS IS" BASIS,
+         *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+         *    See the License for the specific language governing permissions and
+         *    limitations under the License.
+         */
+        public void showMyLicencesDialog(final View view) {
+            final Notices notices = new Notices();
+            //notices.addNotice(new Notice("Test 1", "http://example.org", "Example Person", new ApacheSoftwareLicense20()));
+            //notices.addNotice(new Notice("Test 2", "http://example.org", "Example Person 2", new MITLicense()));
+
+            new LicensesDialog.Builder(getContext())
+                    .setNotices(notices)
+                    .setIncludeOwnLicense(true)
+                    .build()
+                    .show();
         }
     }
 }
