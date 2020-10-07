@@ -103,9 +103,6 @@ public class StoryActivity extends AppCompatActivity {
             }
         });
 
-
-
-
         btn_comment = findViewById(R.id.btn_comment);
         // intent 값 얻어오기
         Intent intent = getIntent();
@@ -163,7 +160,12 @@ public class StoryActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                checkSDKVersion();
+                Intent Intent = new Intent(StoryActivity.this, StopWatchActivity.class);
+                Intent.putExtra("title", title);
+                startActivity(Intent);
+                gamestart.setEnabled(false);
+
+                /*checkSDKVersion();
                 //다른 앱 위에 그리기 허용 확인
                 if(checkSDKVersion()) {
 
@@ -183,7 +185,7 @@ public class StoryActivity extends AppCompatActivity {
                         gamestart.setEnabled(false);
                     }
 
-                }
+                }*/
             }
         });
 

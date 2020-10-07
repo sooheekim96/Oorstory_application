@@ -14,7 +14,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="9dp"
-        android:layout_marginTop="100dp">
+        android:layout_marginTop="50dp">
 
         <ImageView
             android:id="@+id/imageFrame"
@@ -77,33 +77,15 @@
         tools:text="@string/place" />
 
     <TextView
-        android:id="@+id/status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="147dp"
-        android:layout_marginRight="-118dp"
-        android:layout_marginBottom="250dp"
-        android:text="TextView"
-        android:textColor="#000"
-        android:textSize="24sp"
-        tools:layout_editor_absoluteY="502dp"
-        tools:text="가고 있는 중" />
-
-    <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/timeView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="164dp"
-        android:text="TextView"
+        android:layout_marginBottom="218dp"
+        android:text="00:00:00"
         android:textColor="#000"
-        android:textSize="36sp"
-        tools:text="00:01:00" />
+        android:textSize="36sp" />
 
     <Button
         android:id="@+id/arrival_btn"
@@ -111,7 +93,27 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="76dp"
+        android:layout_marginBottom="28dp"
         android:text="도착!" />
+
+    <Button
+        android:id="@+id/startstop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="156dp"
+        android:layout_marginBottom="154dp"
+        android:text="Button" />
+
+    <Button
+        android:id="@+id/naviStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="93dp"
+        android:text="터치 시, 네비게이션 안내 시작 및 타이머 시작" />
 
 </RelativeLayout>

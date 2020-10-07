@@ -2,14 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.oorstory">
 
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <!-- Required if your app targets Android 10 (API level 29) or higher -->
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
-
     <application
         android:name=".Notification"
         android:allowBackup="true"
@@ -18,42 +10,42 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".MyRoomActivity"></activity>
-        <activity android:name=".LocationCheckingActivity"></activity>
+        <activity android:name=".StopWatchActivity"></activity>
+        <activity android:name=".MyRoomActivity" />
+        <activity android:name=".LocationCheckingActivity" />
         <activity android:name=".GameGuideActivity" />
-        <activity android:name=".SplashActivity" />
-        <activity android:name=".StoryActivity"/>
-        <activity android:name=".MapActivity" />
-        <activity android:name=".LocationActivity">
-            <!-- ?인텐트 필터 준 이유
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
-        </activity>
-        <activity android:name=".PrologueActivity" />
-        <activity android:name=".SignupActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".SettingActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".StoryActivity" />
+        <activity android:name=".MapActivity" />
+        <activity android:name=".LocationActivity">
+            <!--
+            ?인텐트 필터 준 이유
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            -->
+        </activity>
+        <activity android:name=".PrologueActivity" />
+        <activity android:name=".SignupActivity" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".SettingActivity" />
+        <activity android:name=".MainActivity">
+            <!-- <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter> -->
+        </activity>
         <activity android:name=".CommentActivity" />
-        <service
-            android:name=".StopWatchService"
-            android:enabled="true"
-            android:exported="false"/>
-        <service
-            android:name=".TimeNotiService"
-            android:enabled="true"
-            android:exported="false"/>
-        <service android:name=".GeofenceTransitionsJobIntentService"/>
-        <receiver android:name=".GeofenceBroadcastReceiver"/>
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -63,10 +55,28 @@
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="2gpflj8qj4" />
+
         <meta-data
             android:name="android.max_aspect"
             android:value="2.1" />
 
+        <receiver android:name=".GeofenceBroadcastReceiver" />
+        <service
+            android:name=".StopWatchService"
+            android:enabled="true"
+            android:exported="false" />
+        <service
+            android:name=".TimeNotiService"
+            android:enabled="true"
+            android:exported="false" />
+        <service android:name=".GeofenceTransitionsJobIntentService" />
     </application>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /> <!-- Required if your app targets Android 10 (API level 29) or higher -->
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
 </manifest>
