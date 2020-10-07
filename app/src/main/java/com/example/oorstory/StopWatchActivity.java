@@ -52,8 +52,13 @@ public class  StopWatchActivity extends AppCompatActivity {
         back_btn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                if(isStart){moveTaskToBack(true);}
-                else{ finish();}
+                if(isStart){
+                    moveTaskToBack(true);
+                } else{
+                    final Intent intentLocal = new Intent();
+                    intentLocal.setAction("activateButton");
+                    sendBroadcast(intentLocal);finish();
+                }
             }
         });
 
