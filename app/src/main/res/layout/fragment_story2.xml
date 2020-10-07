@@ -46,7 +46,7 @@
                 android:background="#ffff"
                 android:onClick="mapIcon_onClick"
                 android:padding="10dp"
-                android:scaleType="fitCenter"
+                android:scaleType="fitStart"
                 app:srcCompat="@drawable/location" />
 
         </LinearLayout>
