@@ -29,9 +29,8 @@ public class  StopWatchActivity extends AppCompatActivity {
     private String title;
 
     private Button naviStart;
-    private Button arrival_btn;
-    private boolean isStart;
-    private Button startstop;
+    private boolean isStart = false;
+    private Button startStop;
     boolean mBound = false;
     TMapTapi tMapTapi;
 
@@ -44,19 +43,17 @@ public class  StopWatchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_stop_watch);
 
         storyTitle = findViewById(R.id.storyTitle);
-        startstop = findViewById(R.id.startstop);
-        naviStart = findViewById(R.id.naviStart);
-        arrival_btn = findViewById(R.id.arrival_btn);
+        startStop = findViewById(R.id.arrival_btn);
         timeView = findViewById(R.id.timeView);
         tMapTapi = new TMapTapi(this);
-        isStart = false;
-        arrival_btn.setEnabled(false);
 
         Intent intent = getIntent();
         title = intent.getStringExtra("title");
         storyTitle.setText(title);
 
         //서비스 결과 받는 Receiver 등록
+        RegisterReceiver();
+
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("StopWatch");
         final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
@@ -67,42 +64,41 @@ public class  StopWatchActivity extends AppCompatActivity {
             }
         };
 
-        registerReceiver(broadcastReceiver, intentFilter);
+
 
         //Start TimeNotiService:
-        naviStart.setOnClickListener(new View.OnClickListener() {
+        startStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!isStart) {
+                    //서비스 시작
+                    serviceIntent = new Intent(StopWatchActivity.this, TimeNotiService.class);
+                    serviceIntent.putExtra("title", title);
+                    ServiceStart(serviceIntent);
 
-                //서비스 시작
-                serviceIntent = new Intent(StopWatchActivity.this, TimeNotiService.class);
-                serviceIntent.putExtra("title", title);
-                ServiceStart(serviceIntent);
-                arrival_btn.setEnabled(true);
-
-                //TMAP 미설치 시 설치 안내
-                boolean istMapApp = tMapTapi.isTmapApplicationInstalled();
-                if (istMapApp == false) {
-                    Log.e("test", "Tmap uninstalled");
-                    tMapInstall();
-                    invokeRoute();
-                }else{
-                    invokeRoute();
-                    naviStart.setEnabled(false);
+                    //TMAP 미설치 시 설치 안내
+                    boolean istMapApp = tMapTapi.isTmapApplicationInstalled();
+                    if (istMapApp == false) {
+                        Log.e("test", "Tmap uninstalled");
+                        tMapInstall();
+                        invokeRoute();
+                    } else {
+                        invokeRoute();
+                        naviStart.setEnabled(false);
+                    }
+                    isStart = true;
+                    naviStart.setText(R.string.arrived);
                 }
+                else{
+                    Log.e("arrival_btn", "stopService");
+                    naviStart.setText(R.string.navistart);
+                    isStart = false;
+                    unbindService(connection);
+                    stopService(serviceIntent);
+                }
+
             }
         });
-
-        arrival_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.e("arrival_btn", "stopService");
-                //unregisterReceiver(broadcastReceiver);
-                unbindService(connection);
-                stopService(serviceIntent);
-            }
-        });
-
 
     }
 
@@ -118,6 +114,20 @@ public class  StopWatchActivity extends AppCompatActivity {
             startService(serviceIntent);
         }
         bindService(serviceIntent, connection, BIND_AUTO_CREATE );
+    }
+
+    private void RegisterReceiver(){
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("StopWatch");
+        final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                time = intent.getStringExtra("time");
+                timeView.setText(time);
+            }
+        };
+        registerReceiver(broadcastReceiver, intentFilter);
+
     }
 
     private ServiceConnection connection = new ServiceConnection() {

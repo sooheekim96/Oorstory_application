@@ -8,13 +8,11 @@
     android:background="#ffff">
 
     <FrameLayout
+        android:id="@+id/imageLayout"
         android:layout_width="wrap_content"
-        android:layout_height="301dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
+        android:layout_height="270dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="9dp"
-        android:layout_marginTop="50dp">
+        android:layout_marginTop="87dp">
 
         <ImageView
             android:id="@+id/imageFrame"
@@ -31,8 +29,6 @@
             android:layout_marginLeft="12dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="12dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@drawable/example_place"
             tools:layout_editor_absoluteY="221dp" />
 
@@ -42,38 +38,27 @@
         android:id="@+id/storyTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="116dp"
-        android:layout_marginTop="42dp"
+        android:layout_marginTop="28dp"
         android:autoSizeTextType="uniform"
         android:text="TextView"
         android:textColor="#000"
         android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="161dp"
         tools:text="@string/story" />
 
     <TextView
         android:id="@+id/missionDescr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="145dp"
-        android:layout_marginBottom="291dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="275dp"
         android:autoSizeTextType="uniform"
-        android:text="TextView"
+        android:text="@string/place"
         android:textColor="#000"
         android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.297"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="494dp"
         tools:text="@string/place" />
 
     <TextView
@@ -89,31 +74,14 @@
 
     <Button
         android:id="@+id/arrival_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="344dp"
+        android:layout_height="68dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="28dp"
-        android:text="도착!" />
-
-    <Button
-        android:id="@+id/startstop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginEnd="156dp"
-        android:layout_marginBottom="154dp"
-        android:text="Button" />
-
-    <Button
-        android:id="@+id/naviStart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="93dp"
-        android:text="터치 시, 네비게이션 안내 시작 및 타이머 시작" />
+        android:backgroundTint="#149414"
+        android:text="@string/navistart"
+        android:autoSizeTextType="uniform"
+        android:textColor="#000" />
 
 </RelativeLayout>
