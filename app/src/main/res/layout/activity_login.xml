@@ -17,12 +17,10 @@
         android:textColor="#000"
         android:gravity="center"
         android:textSize="36sp"
-        android:textStyle="bold"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"/>
+        android:textStyle="bold" />
 
     <EditText
-        android:background="#fff"
+        android:background="@drawable/edge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="이메일"
@@ -36,7 +34,7 @@
         android:foregroundTint="#000"/>
 
     <EditText
-        android:background="#fff"
+        android:background="@drawable/edge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="비밀번호"
@@ -66,19 +64,37 @@
         android:text="Sign up"
         android:textSize="18dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginRight="20dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/small_text"
+            android:text="Don't Have an Account? "
+            android:paddingRight="5dp"/>
+
+        <TextView
+            android:id="@+id/guest_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/small_text"
+            android:text="Try Guest Mode"
+            android:textStyle="bold"/>
+    </LinearLayout>
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Remember login"
-        android:textSize="18dp"
+        android:textSize="16dp"
         android:buttonTint="#000"
         android:textColor="#000"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_gravity="center"/>
+        android:layout_marginTop="10dp" />
 
 </LinearLayout>

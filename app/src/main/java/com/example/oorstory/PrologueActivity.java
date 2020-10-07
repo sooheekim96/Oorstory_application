@@ -42,9 +42,10 @@ public class PrologueActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
+        Intent intent = new Intent(PrologueActivity.this, MainActivity.class);
+
         switch (v.getId()){
             case R.id.skip_tv :
-                Intent intent = new Intent(PrologueActivity.this, MainActivity.class);
                 finish();
                 startActivity(intent);
                 break;
@@ -54,7 +55,10 @@ public class PrologueActivity extends AppCompatActivity implements View.OnClickL
                 if (index>=0 && index<prologues.length){
                     mProgBar.setProgress(index);
                     progTv.setText(prologues[index]);
-                } else{ index = index-1;
+                } else{
+                    finish();
+                    startActivity(intent);
+                    index = index-1;
                 }
                 break;
 

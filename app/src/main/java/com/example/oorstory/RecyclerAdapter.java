@@ -135,10 +135,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             recycler1_card_view = itemView.findViewById(R.id.recycler1_card_view);
 
             // 클릭 이벤트
-            title_story.setOnClickListener(new TextView.OnClickListener(){
+            itemView.setOnClickListener(new TextView.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    Log.e("클릭 발생", "제목을 클릭 했습니다.");
                     Intent intent = new Intent(v.getContext(), MapActivity.class);
                     intent.putExtra("title", title_story.getText().toString());
                     intent.putExtra("theme", theme_story.getText().toString());

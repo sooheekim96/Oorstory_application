@@ -25,6 +25,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import static java.lang.Math.*;
+
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener {
     private GoogleMap mMap;
     private String story_title;
@@ -79,8 +81,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         locations.put("홍대입구역", new Double[]{37.558130, 126.925655}); //홍대입구역
         locations.put("회현역", new Double[]{37.558510, 126.978082}); //회현역
 
-        // 모든 마커의 중심을 저장, x:위도, y:경도
-        Double x = 0.0, y = 0.0;
+        // x:위도, y:경도
+        Double max_x = null, min_x = null, max_y = null, min_y = null;
 
         LatLng latLng;
         for (String region: locations.keySet()){
@@ -94,15 +96,35 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     .snippet(findAddress(loc[0], loc[1]));
             googleMap.addMarker(markerOptions);
 
-            // 중심구하기
-            x = x+loc[0];
-            y = y+loc[1];
+            // 위도, 경도 저장
+            max_x = max_x==null?loc[0]:max(loc[0], max_x);
+            min_x = min_x==null?loc[0]:min(loc[0], min_x);
+            max_y = max_y==null?loc[1]:max(loc[1], max_y);
+            min_y = min_y==null?loc[1]:min(loc[1], min_y);
         }
 
-        // 지도 중심 및 확대 비율 지정
-        latLng = new LatLng(x/locations.size(), y/locations.size());
+        // 지도 중심 지정
+        latLng = new LatLng((max_x+min_x)/2, (max_y+min_y)/2);
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng)); // 설정한 위도 경도를 중심으로 지도를 띄워줌
-        googleMap.moveCamera(CameraUpdateFactory.zoomTo(10));
+
+        // 지도 줌레벨 조정
+        // https://ai-programmer.tistory.com/2
+        // http://tedware.kr/posts/106
+        Double distance = acos(cos(toRadians( 90-max_x)) * cos(toRadians( 90-min_x)) + sin(toRadians( 90-max_x)) * sin(toRadians( 90-min_x)) * cos(toRadians(max_y-min_y))) * 6378.137;
+        int max_size = 6144000;
+        int level;
+        for (level = 3; level<=18;level++){
+            if (distance*1000>max_size){
+                googleMap.moveCamera(CameraUpdateFactory.zoomTo(level-1));
+                break;
+            }
+            max_size = max_size/2;
+        }
+
+        if (level>=18) googleMap.moveCamera(CameraUpdateFactory.zoomTo(18));
+        Log.e("확인 레벨", level+"");
+        Log.e("max_size", max_size+"");
+        Log.e("거리", distance*1000+"");
     }
 
     // 위도, 경도 값으로 주소 얻어오기
