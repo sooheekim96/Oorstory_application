@@ -74,6 +74,11 @@ public class TimeNotiService extends Service {
     @Override
     public void onDestroy() {
         Log.e("onDestroy", "destory");
+
+        final Intent intentLocal = new Intent();
+        intentLocal.setAction("activateButton");
+        sendBroadcast(intentLocal);
+
         timer.cancel();
         /*handler.removeCallbacks(rt);
         handler.removeCallbacksAndMessages(null);*/

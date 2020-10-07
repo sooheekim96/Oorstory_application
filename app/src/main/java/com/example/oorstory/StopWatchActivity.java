@@ -15,6 +15,7 @@ import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import com.example.oorstory.TimeNotiService.LocalBinder;
 import com.skt.Tmap.TMapTapi;
@@ -28,7 +29,6 @@ public class  StopWatchActivity extends AppCompatActivity {
     private TextView storyTitle;
     private String title;
 
-    private Button naviStart;
     private boolean isStart = false;
     private Button startStop;
     boolean mBound = false;
@@ -36,6 +36,7 @@ public class  StopWatchActivity extends AppCompatActivity {
 
     TimeNotiService mService;
     Intent serviceIntent;
+    ImageButton back_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +44,18 @@ public class  StopWatchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_stop_watch);
 
         storyTitle = findViewById(R.id.storyTitle);
-        startStop = findViewById(R.id.arrival_btn);
+        startStop = findViewById(R.id.startStop);
         timeView = findViewById(R.id.timeView);
         tMapTapi = new TMapTapi(this);
+        back_btn= findViewById(R.id.back_btn_toStory);
+
+        back_btn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                if(isStart){moveTaskToBack(true);}
+                else{ finish();}
+            }
+        });
 
         Intent intent = getIntent();
         title = intent.getStringExtra("title");
@@ -53,18 +63,6 @@ public class  StopWatchActivity extends AppCompatActivity {
 
         //서비스 결과 받는 Receiver 등록
         RegisterReceiver();
-
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("StopWatch");
-        final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                time = intent.getStringExtra("time");
-                timeView.setText(time);
-            }
-        };
-
-
 
         //Start TimeNotiService:
         startStop.setOnClickListener(new View.OnClickListener() {
@@ -84,14 +82,13 @@ public class  StopWatchActivity extends AppCompatActivity {
                         invokeRoute();
                     } else {
                         invokeRoute();
-                        naviStart.setEnabled(false);
                     }
                     isStart = true;
-                    naviStart.setText(R.string.arrived);
+                    startStop.setText(R.string.arrived);
                 }
                 else{
                     Log.e("arrival_btn", "stopService");
-                    naviStart.setText(R.string.navistart);
+                    startStop.setText(R.string.navistart);
                     isStart = false;
                     unbindService(connection);
                     stopService(serviceIntent);
@@ -100,6 +97,11 @@ public class  StopWatchActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed(){
+        moveTaskToBack(true);
     }
 
     private void ServiceStart(Intent serviceIntent){

@@ -3,7 +3,7 @@
     <string name="hint_minute">Minute</string>
     <string name="message_minutes">Please Enter Minutes...</string>
     <string name="timestamp">TimeStamp</string>
-    <string name="arrived">도착!</string>
+    <string name="arrived">목적지에 도착하였나요?</string>
     <string name="story">스토리 타이틀</string>
     <string name="place">목표 장소</string>
     <string name="mission">미션 타이틀</string>

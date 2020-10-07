@@ -164,28 +164,6 @@ public class StoryActivity extends AppCompatActivity {
                 Intent.putExtra("title", title);
                 startActivity(Intent);
                 gamestart.setEnabled(false);
-
-                /*checkSDKVersion();
-                //다른 앱 위에 그리기 허용 확인
-                if(checkSDKVersion()) {
-
-                    //Start TimeNotiService:
-                    Intent serviceIntent = new Intent(StoryActivity.this, TimeNotiService.class);
-                    serviceIntent.putExtra("title", title);
-                    ServiceStart(serviceIntent);
-
-                    //TMAP 미설치 시 설치 안내
-                    boolean istMapApp = tMapTapi.isTmapApplicationInstalled();
-                    if (istMapApp == false) {
-                        Log.e("test", "Tmap uninstalled");
-                        tMapInstall();
-                        invokeRoute();
-                    }else{
-                        invokeRoute();
-                        gamestart.setEnabled(false);
-                    }
-
-                }*/
             }
         });
 
@@ -200,7 +178,6 @@ public class StoryActivity extends AppCompatActivity {
             }
         };
         registerReceiver(broadcastReceiver, intentFilter);
-
 
     }
 

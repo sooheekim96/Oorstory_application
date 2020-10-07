@@ -17,11 +17,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="20dp"
-            android:layout_weight="0.02" />
-
         <ImageButton
         android:id="@+id/back_btn_toMap"
         android:layout_width="0dp"
@@ -34,6 +29,11 @@
         android:paddingBottom="5dp"
         android:scaleType="fitCenter"
         android:src="@drawable/back" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_weight="0.02" />
 
         <TextView
             android:layout_width="0dp"
