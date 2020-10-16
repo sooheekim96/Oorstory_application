@@ -146,6 +146,17 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     context.startActivity(intent);
                 }
             });
+            title_story.setOnClickListener(new TextView.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), MapActivity.class);
+                    intent.putExtra("title", title_story.getText().toString());
+                    intent.putExtra("theme", theme_story.getText().toString());
+                    intent.putExtra("time", time_story.getText().toString());
+                    intent.putExtra("star_num", star_num+""); // 별 개수
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 
