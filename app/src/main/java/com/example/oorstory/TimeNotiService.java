@@ -106,10 +106,9 @@ public class TimeNotiService extends Service {
                     if (running) {
                         seconds++;
                     }
-
                     Intent intentLocal = new Intent();
                     intentLocal.setAction("StopWatch");
-                    intentLocal.putExtra("time", time);
+                    intentLocal.putExtra("timer", seconds);
                     sendBroadcast(intentLocal);
                     UpdateNotification(time);
                 }

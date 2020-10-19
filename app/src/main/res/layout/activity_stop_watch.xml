@@ -14,7 +14,7 @@
         android:layout_height="212dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="119dp"
+        android:layout_marginTop="100dp"
         app:srcCompat="@drawable/example_place"
         tools:layout_editor_absoluteY="221dp" />
 
@@ -68,19 +68,60 @@
         android:textColor="#fff"
         android:textSize="14sp" />
     <ImageButton
-        android:id="@+id/back_btn_toStory"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+    android:id="@+id/back_btn_toStory"
+    android:layout_width="30dp"
+    android:layout_height="30dp"
+    android:layout_weight="0.08"
+    android:background="@android:color/transparent"
+    android:paddingLeft="0dp"
+    android:paddingTop="5dp"
+    android:paddingRight="2dp"
+    android:paddingBottom="5dp"
+    android:scaleType="fitCenter"
+    android:src="@drawable/back"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true"
+    android:layout_marginTop="5dp" />
+
+    <ImageButton
+        android:id="@+id/pause"
+        android:layout_width="66dp"
+        android:layout_height="62dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="171dp"
+        android:layout_marginTop="537dp"
         android:layout_weight="0.08"
-        android:background="@android:color/transparent"
+        android:background="@drawable/ic_pause"
+        android:backgroundTint="@color/colorBlack"
         android:paddingLeft="0dp"
         android:paddingTop="5dp"
         android:paddingRight="2dp"
         android:paddingBottom="5dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/back"
-        android:layout_alignParentLeft="true"
+        android:visibility="gone"
+        />
+
+    <ImageButton
+        android:id="@+id/start"
+        android:layout_width="66dp"
+        android:layout_height="62dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="5dp" />
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="false"
+        android:layout_marginLeft="171dp"
+        android:layout_marginTop="537dp"
+        android:layout_weight="0.08"
+        android:background="@drawable/ic_start"
+        android:backgroundTint="@color/colorBlack"
+        android:paddingLeft="0dp"
+        android:paddingTop="5dp"
+        android:paddingRight="2dp"
+        android:paddingBottom="5dp"
+        android:scaleType="fitCenter"
+        android:visibility="gone"
+        />
+
 
 </RelativeLayout>

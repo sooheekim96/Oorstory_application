@@ -27,6 +27,7 @@ import com.skt.Tmap.TMapGpsManager;
 import com.skt.Tmap.TMapGpsManager.onLocationChangedCallback;
 
 import java.util.HashMap;
+import java.util.Locale;
 
 public class  StopWatchActivity extends Activity implements onLocationChangedCallback{
 
@@ -41,9 +42,13 @@ public class  StopWatchActivity extends Activity implements onLocationChangedCal
     }
 
     private TextView timeView;
+    private int seconds;
+    private int pre_time = 0;
     private String time;
     private TextView storyTitle;
     private String title;
+    private ImageButton start_btn;
+    private ImageButton pause_btn;
 
     private boolean isStart = false;
     private Button startStop;
@@ -75,13 +80,16 @@ public class  StopWatchActivity extends Activity implements onLocationChangedCal
                     invokeRoute();
                     isStart = true;
                     startStop.setText(R.string.arrived);
+                    pause_btn.setVisibility(View.VISIBLE);
                 }
                 else{
                     Log.e("arrival_btn", "stopService");
                     startStop.setText(R.string.navistart);
                     isStart = false;
-                    unbindService(connection);
+                    //stopService foloowed by unbindService
                     stopService(serviceIntent);
+                    unbindService(connection);
+
 
                     tracking_mode = false;
                 }
@@ -100,6 +108,31 @@ public class  StopWatchActivity extends Activity implements onLocationChangedCal
                 }
             }
         });
+
+        pause_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isStart){
+                    stopService(serviceIntent);
+                    unbindService(connection);
+                    isStart = false;
+                    pre_time = seconds;
+                    start_btn.setVisibility(View.VISIBLE);
+                    pause_btn.setVisibility(View.GONE);
+                }
+            }
+        });
+        start_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!isStart){
+                   ServiceStart();
+                   isStart = true;
+                   pause_btn.setVisibility(View.VISIBLE);
+                   start_btn.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
     @Override
@@ -108,7 +141,7 @@ public class  StopWatchActivity extends Activity implements onLocationChangedCal
         setContentView(R.layout.activity_stop_watch);
 
         gps = new TMapGpsManager(StopWatchActivity.this);
-        gps.setLocationCallback();
+        gps.setLocationCallback(); // 현재 위치상태 변경 시 호출되는 콜백 인터페이스를 설정하고 그 성공여부를 반환
         permissionManager = new PermissionManager(this); // 권한요청 관리자
 
         storyTitle = findViewById(R.id.storyTitle);
@@ -116,6 +149,8 @@ public class  StopWatchActivity extends Activity implements onLocationChangedCal
         timeView = findViewById(R.id.timeView);
         tMapTapi = new TMapTapi(this);
         back_btn= findViewById(R.id.back_btn_toStory);
+        start_btn = findViewById(R.id.start);
+        pause_btn = findViewById(R.id.pause);
 
         Intent intent = getIntent();
         title = intent.getStringExtra("title");
@@ -133,7 +168,7 @@ public class  StopWatchActivity extends Activity implements onLocationChangedCal
     }
 
     private void ServiceStart(){
-        Intent serviceIntent = new Intent(StopWatchActivity.this, TimeNotiService.class);
+        serviceIntent = new Intent(StopWatchActivity.this, TimeNotiService.class);
         serviceIntent.putExtra("title", title);
 
         //서비스 시작하기 (SDK에 따라 호출함수 달라짐)
@@ -142,7 +177,7 @@ public class  StopWatchActivity extends Activity implements onLocationChangedCal
                 Log.e("startForegroundService", "start");
                 startForegroundService(serviceIntent);
             }
-        } else {
+        }else {
             Log.e("startService", "start");
             startService(serviceIntent);
         }
@@ -177,7 +212,7 @@ public class  StopWatchActivity extends Activity implements onLocationChangedCal
             }
         });
         curLocation = gps.getLocation();
-}
+    }
 
     //권한 요청(permissionRequest)의 결과를 받아오는 함수
     @Override
@@ -191,7 +226,13 @@ public class  StopWatchActivity extends Activity implements onLocationChangedCal
         final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                time = intent.getStringExtra("time");
+                seconds = pre_time + intent.getIntExtra("timer", 0);
+                Log.e("seconds", Integer.toString(seconds));
+                int hours = seconds / 3600;
+                int minutes = (seconds % 3600) / 60;
+                int secs = seconds % 60;
+                time = String.format(Locale.getDefault(), "%d:%02d:%02d",
+                        hours, minutes, secs);
                 timeView.setText(time);
             }
         };
