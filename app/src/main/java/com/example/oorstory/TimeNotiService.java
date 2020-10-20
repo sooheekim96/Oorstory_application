@@ -8,7 +8,10 @@ package com.example.oorstory;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.os.Binder;
@@ -45,6 +48,7 @@ public class TimeNotiService extends Service {
     private int seconds = 0;
     private boolean running = true;
     private String time;
+    private int pre_time = 0;
 
     final Timer timer = new Timer();
 
@@ -58,17 +62,18 @@ public class TimeNotiService extends Service {
         }
     }
 
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         Log.e("bind", "bind");
         return binder;
     }
+
     @Override
     public void onCreate() {
         super.onCreate();
         UpdateNotification("게임을 시작합니다.");
-        //setView();
     }
 
     @Override
@@ -80,6 +85,7 @@ public class TimeNotiService extends Service {
         sendBroadcast(intentLocal);
 
         timer.cancel();
+
         /*handler.removeCallbacks(rt);
         handler.removeCallbacksAndMessages(null);*/
         super.onDestroy();
@@ -92,6 +98,7 @@ public class TimeNotiService extends Service {
             return Service.START_STICKY;
         }else {
             title  = intent.getStringExtra("title");
+            seconds += intent.getIntExtra("pretime", 0);
 
             timer.scheduleAtFixedRate(new TimerTask() {
 
@@ -108,11 +115,12 @@ public class TimeNotiService extends Service {
                     }
                     Intent intentLocal = new Intent();
                     intentLocal.setAction("StopWatch");
-                    intentLocal.putExtra("timer", seconds);
+                    intentLocal.putExtra("seconds", seconds);
+                    intentLocal.putExtra("timer", time);
                     sendBroadcast(intentLocal);
                     UpdateNotification(time);
                 }
-            }, 0, 1000);
+        }, 0, 1000);
 
 
             return Service.START_NOT_STICKY;

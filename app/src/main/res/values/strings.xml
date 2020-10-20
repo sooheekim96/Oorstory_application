@@ -16,4 +16,8 @@
     <string name="geofence_transition_entered">geofence_transition_entered</string>
     <string name="geofence_transition_exited">geofence_transition_exited</string>
     <string name="unknown_geofence_transition">unknown_geofence_transition</string>
+    <string name="ok">예</string>
+    <string name="cancel">아니오</string>
+    <string name="close_title">게임을 종료하시겠습니까?</string>
+    <string name="close_messg">게임 기록이 저장되지 않습니다.</string>
 </resources>
