@@ -6,14 +6,14 @@ android {
 
     defaultConfig {
         applicationId "com.example.ourstory"
-        minSdkVersion 28
+        minSdkVersion 22
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         ndk{
-            abiFilters 'armeabi-v7a'
+            abiFilters 'armeabi-v7a', "x86"
         }
     }
 
@@ -21,6 +21,22 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        splits {
+            abi {
+                def isReleaseBuild = false
+                gradle.startParameter.taskNames.find {
+                    if (it ==~ /.*Release/) {
+                        isReleaseBuild = true
+                        return true
+                    }
+                    return false
+                }
+                reset()
+                enable isReleaseBuild
+                universalApk true
+                include "x86", "x86_64", "armeabi-v7a", "arm64-v8a"
+            }
         }
     }
 
