@@ -21,27 +21,36 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.skt.Tmap.TMapTapi;
 import java.util.HashMap;
+
+import me.relex.circleindicator.CircleIndicator3;
 
 /*import me.relex.circleindicator.CircleIndicator3;*/
 
 public class StoryActivity extends AppCompatActivity {
     private String userLocation;
+    private ImageView selectedImage;
     private LinearLayout btn_comment;
-    private ImageButton gamestart;
+    private Button gamestart;
     private ViewPager2 mPager;
     private FragmentStateAdapter pagerAdapter;
     private int num_page = 2;
-/*    private CircleIndicator3 mIndicator;*/
+    private String[] descs = { "강남역 11번 출구", "잠실한강공원"};
+    private String desc ;
+
+    /*    private CircleIndicator3 mIndicator;*/
+    private CircleIndicator3 mIndicator;
+
     String title, theme, time;
     int star_num;
-
     TMapTapi tMapTapi;
 
     @Override
@@ -56,14 +65,14 @@ public class StoryActivity extends AppCompatActivity {
                 return null;
             }
         };
-            mPager.setAdapter(pagerAdapter);
+        mPager.setAdapter(pagerAdapter);
 
-/*        mIndicator = findViewById(R.id.indicator);
+        mIndicator = findViewById(R.id.indicator);
         mIndicator.setViewPager(mPager);
-        mIndicator.createIndicators(num_page, 0);*/
+        mIndicator.createIndicators(num_page, 0);
 
         mPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
-        mPager.setCurrentItem(1000);
+        mPager.setCurrentItem(1, true);
         mPager.setOffscreenPageLimit(3);
 
         mPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
@@ -72,34 +81,19 @@ public class StoryActivity extends AppCompatActivity {
                 super.onPageScrolled(position, positionOffset, positionOffsetPixels);
                 if (positionOffsetPixels == 0) {
                     mPager.setCurrentItem(position);
+                    Log.e("onPageScrolled", "PageScrolled");
                 }
             }
 
-/*            @Override
+            @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
+                Log.e("onPageSelected", "pageselected");
+                Log.e("position", Integer.toString(position));
+                desc = descs[position];
+                gamestart.setText(desc + "로 출발하기");
                 mIndicator.animatePageSelected(position%num_page);
-            }*/
-        });
-
-
-
-        final float pageMargin = getResources().getDimensionPixelOffset(R.dimen.pageMargin);
-        final float pageOffset = getResources().getDimensionPixelOffset(R.dimen.offset);
-
-        mPager.setPageTransformer(new ViewPager2.PageTransformer() {
-            @Override
-            public void transformPage(@NonNull View page, float position) {
-                float myOffset = position *-(2*pageOffset + pageMargin);
-                if(mPager.getOrientation() == ViewPager2.ORIENTATION_HORIZONTAL){
-                    if(ViewCompat.getLayoutDirection(mPager) == ViewCompat.LAYOUT_DIRECTION_RTL){
-                        page.setTranslationX(-myOffset);
-                    } else {
-                        page.setTranslationX(myOffset);
-                    }
-                } else {
-                    page.setTranslationY(myOffset);
-                }
+                //Toast.makeText(StoryActivity.this, "onPageSelected", Toast.LENGTH_SHORT);
             }
         });
 
@@ -150,7 +144,7 @@ public class StoryActivity extends AppCompatActivity {
 
 
         // 게임 시작하기 및 타이머 시작 + Tmap
-        gamestart = (ImageButton)findViewById(R.id.gameStart);
+        gamestart = (Button)findViewById(R.id.gameStart);
         tMapTapi = new TMapTapi(this);
 
         configureApp();
@@ -162,6 +156,7 @@ public class StoryActivity extends AppCompatActivity {
 
                 Intent Intent = new Intent(StoryActivity.this, StopWatchActivity.class);
                 Intent.putExtra("title", title);
+                Intent.putExtra("place", desc);
                 startActivity(Intent);
                 gamestart.setEnabled(false);
             }
@@ -231,61 +226,5 @@ public class StoryActivity extends AppCompatActivity {
         });
     }
 
-    //이륜차 주행 길안내
-    public void invokeRoute(){
-        HashMap pathInfo = new HashMap();
-        pathInfo.put("rGoName", "T타워");
-        pathInfo.put("rGoX", "126.985302");
-        pathInfo.put("rGoY", "37.570841");
-
-        pathInfo.put("rStName", "출발지");
-        pathInfo.put("rStX", "126.926252");
-        pathInfo.put("rStY", "37.557607");
-
-        pathInfo.put("rV1Name", "경유지");
-        pathInfo.put("rV1X", "126.976867");
-        pathInfo.put("rV1Y", "37.576016");
-        pathInfo.put("rSOpt", "6");
-        tMapTapi.invokeRoute(pathInfo);
-    }
-
-    public void tMapInstall() {
-        new Thread() {
-            @Override
-            public void run() {
-                Uri uri = Uri.parse(tMapTapi.getTMapDownUrl().get(0));
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
-            }
-
-        }.start();
-    }
-
-    public boolean checkSDKVersion(){
-        Log.e("msg", "들어옴");
-        if(Build.VERSION.SDK_INT >= 23) {
-            if (!Settings.canDrawOverlays(StoryActivity.this)) {
-                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                        Uri.parse("package:" + getPackageName()));
-                Log.e("msg", "허용안됨");
-                startActivityForResult(intent, 1);
-                return false;
-            }
-            else{ return true; }
-        }else{ return true; }
-    }
-
-    private void ServiceStart(Intent serviceIntent){
-        //서비스 시작하기 (SDK에 따라 호출함수 달라짐)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            if (serviceIntent!=null) {
-                Log.e("startForegroundService", "start");
-                startForegroundService(serviceIntent);
-            }
-        } else {
-            Log.e("startService", "start");
-            startService(serviceIntent);
-        }
-    }
 
 }

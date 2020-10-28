@@ -208,12 +208,49 @@
                 android:layout_marginRight="10dp"
                 android:progress="25" />
 
-            <androidx.cardview.widget.CardView
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp">
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/desc_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="37dp"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:text="목표 장소 목록"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp" />
+
+                <ImageButton
+                    android:id="@+id/map"
+                    android:layout_width="40dp"
+                    android:layout_height="35dp"
+                    android:layout_alignWithParentIfMissing="false"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="86dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_toRightOf="@+id/desc_list"
+                    android:background="#ffff"
+                    android:onClick="mapIcon_onClick"
+                    android:scaleType="fitStart"
+                    app:srcCompat="@drawable/location" />
+
+            </RelativeLayout >
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -221,38 +258,30 @@
                     android:background="#ffff"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:gravity="center"
-                        android:text="목표 장소 목록"
-                        android:textColor="@android:color/black"
-                        android:textSize="18sp" />
-
                     <androidx.viewpager2.widget.ViewPager2
                         android:id="@+id/viewpager"
                         android:clipToPadding="false"
                         android:clipChildren="false"
                         android:layout_width="match_parent"
-                        android:layout_height="370dp" />
+                        android:layout_height="330dp" />
+
                     <me.relex.circleindicator.CircleIndicator3
                         android:id="@+id/indicator"
                         android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:layout_gravity="bottom"/>
+                        android:layout_height="30dp"
+                        android:layout_gravity="bottom" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <ImageButton
+            <Button
                 android:id="@+id/gameStart"
                 android:layout_width="410dp"
-                android:layout_height="100dp"
+                android:layout_height="0dp"
                 android:layout_weight="0.08"
-                android:background="@android:color/transparent"
+                android:backgroundTint="@color/colorGreen"
                 android:scaleType="fitCenter"
-                android:src="@drawable/gamestart" />
+                android:textColor="@color/colorBlack" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -280,6 +309,8 @@
                             android:layout_weight="1"
                             android:gravity="center"
                             android:text="게임 방법 설명란"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/nanumbarungothic"
                             android:textColor="@android:color/black"
                             android:textSize="18sp"
                             tools:layout_margin="10dp" />
