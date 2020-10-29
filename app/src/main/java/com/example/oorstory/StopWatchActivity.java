@@ -50,7 +50,9 @@ public class  StopWatchActivity extends Activity implements onLocationChangedCal
     private int pre_time = 0;
     private String time;
     private TextView storyTitle;
+    private TextView placeTitle;
     private String title;
+    private String palace;
     private ImageButton start_btn;
     private ImageButton pause_btn;
     private ImageButton stop_btn;
@@ -82,10 +84,13 @@ public class  StopWatchActivity extends Activity implements onLocationChangedCal
         start_btn = findViewById(R.id.start);
         pause_btn = findViewById(R.id.pause);
         stop_btn = findViewById(R.id.stop);
+        placeTitle = findViewById((R.id.placeTitle));
 
         Intent intent = getIntent();
         title = intent.getStringExtra("title");
+        palace = intent.getStringExtra("place");
         storyTitle.setText(title);
+        placeTitle.setText(palace);
 
         //위치확인 권한
         PermissionRequest();

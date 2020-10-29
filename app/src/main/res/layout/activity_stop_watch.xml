@@ -22,7 +22,7 @@
         android:id="@+id/storyTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/missionDescr"
+        android:layout_below="@id/placeTitle"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="400dp"
@@ -33,7 +33,7 @@
         tools:text="@string/story" />
 
     <TextView
-        android:id="@+id/missionDescr"
+        android:id="@+id/placeTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
