@@ -45,6 +45,8 @@
             </intent-filter> -->
         </activity>
         <activity android:name=".CommentActivity" />
+        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat"/><!-- optional (needed if default theme has no action bar) -->
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -77,6 +79,10 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /> <!-- Required if your app targets Android 10 (API level 29) or higher -->
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
+
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
 
 </manifest>
