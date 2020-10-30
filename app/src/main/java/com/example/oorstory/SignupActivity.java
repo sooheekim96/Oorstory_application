@@ -25,11 +25,18 @@ import com.blogspot.atifsoftwares.circularimageview.CircularImageView;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.util.regex.Pattern;
+
+import static java.lang.Thread.sleep;
+
 public class SignupActivity extends AppCompatActivity implements View.OnClickListener {
 
     EditText et_email, et_id, et_passwd, et_passwd2;
     Button btn_register;
     CircularImageView iv_img;
+
+
+    private final Pattern textPattern = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*_\\-]).+$");
 
     private static final int CAMERA_REQ_CODE = 100;
     private static final int STORAGE_REQ_CODE = 101;
@@ -59,8 +66,6 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
 
         dbHelper = new UserdbHelper(this);
-
-
         cameraPermissions = new String[] {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         storagePermissions = new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
@@ -79,18 +84,35 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                     email = ""+et_email.getText().toString().trim();
                     passwd = ""+et_passwd.getText().toString().trim();
                     passwd2 = ""+et_passwd2.getText().toString().trim();
-
-                    if (true) {
+                    boolean case1 = (6>userid.length()) || (userid.length()>12);
+                    boolean case2 = (8>passwd.length()) || (passwd.length()>20 || (isTextValid(passwd)));
+                    boolean case3 = passwd.length()!=passwd2.length();
+                    if (case1){
+                        Toast.makeText(SignupActivity.this, "6~12자 영문, 숫자로 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    }
+                    else if (case2) {
+                        Toast.makeText(SignupActivity.this, "8~20자 영문 대소문자, 숫자, 특수문자를 혼합하여 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    }
+                    else if (case3) {
+                        Toast.makeText(SignupActivity.this, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
                         long id = dbHelper.insertRecord(
                                 ""+userid,
                                 ""+email,
                                 ""+imageUri,
                                 ""+passwd
                         );
-                        Toast.makeText(SignupActivity.this, "Record Added against ID:"+id, Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        Toast.makeText(SignupActivity.this, "Please check password again", Toast.LENGTH_SHORT).show();
+
+                        if (id>0) {
+//                            Toast.makeText(SignupActivity.this, "Record Added against ID:"+id, Toast.LENGTH_SHORT).show();
+//                            sleep(10);
+                            Toast.makeText(SignupActivity.this, "회원가입이 완료되었습니다.", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                        else {
+                            Toast.makeText(SignupActivity.this, "Error creating user", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
                 catch(Exception e) {
@@ -99,6 +121,10 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
             }
         });
         findViewById(R.id.back_btn_signup).setOnClickListener(this);
+    }
+
+    public boolean isTextValid(String textToCheck) {
+        return textPattern.matcher(textToCheck).matches();
     }
 
 
