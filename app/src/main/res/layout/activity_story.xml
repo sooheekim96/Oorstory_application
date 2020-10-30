@@ -17,6 +17,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <View
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_weight="0.02" />
+
         <ImageButton
         android:id="@+id/back_btn_toMap"
         android:layout_width="0dp"
@@ -24,16 +29,12 @@
         android:layout_weight="0.08"
         android:background="@android:color/transparent"
         android:paddingLeft="0dp"
-        android:paddingTop="5dp"
+        android:paddingTop="10dp"
         android:paddingRight="2dp"
         android:paddingBottom="5dp"
         android:scaleType="fitCenter"
         android:src="@drawable/back" />
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="20dp"
-            android:layout_weight="0.02" />
 
         <TextView
             android:layout_width="0dp"
@@ -236,12 +237,12 @@
                     android:layout_marginLeft="86dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="30dp"
                     android:layout_toRightOf="@+id/desc_list"
                     android:background="#ffff"
                     android:onClick="mapIcon_onClick"
                     android:scaleType="fitStart"
-                    app:srcCompat="@drawable/location" />
+                    app:srcCompat="@drawable/greenpin" />
 
             </RelativeLayout >
 
@@ -279,77 +280,12 @@
                 android:layout_width="410dp"
                 android:layout_height="0dp"
                 android:layout_weight="0.08"
-                android:backgroundTint="@color/colorGreen"
+                android:backgroundTint="#56E85E"
                 android:scaleType="fitCenter"
                 android:textColor="@color/colorBlack" />
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#ffff"
-                    android:orientation="vertical">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="#ffff"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="200dp"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="5dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="게임 방법 설명란"
-                            android:textStyle="bold"
-                            android:fontFamily="@font/nanumbarungothic"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp"
-                            tools:layout_margin="10dp" />
-
-                        <TextView
-                            android:id="@+id/show_game_tv"
-                            android:layout_width="10dp"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:layout_weight="1"
-                            android:clickable="true"
-                            android:ems="10"
-                            android:gravity="right|fill_vertical"
-                            android:inputType="textPersonName"
-                            android:onClick="unfold_cardview"
-                            android:text="▼ 더보기"
-                            android:textColor="@android:color/black"
-                            android:textSize="12sp"
-                            tools:layout_margin="10dp" />
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/explan_game_tv"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:background="#ffff"
-                        android:ems="10"
-                        android:gravity="start|top"
-                        android:inputType="textMultiLine"
-                        android:padding="10dp"
-                        android:text="게임설명입니다. 게임설명입니다. 게임설명입니다. 게임설명입니다. 게임설명입니다. 게임설명입니다. 게임설명입니다. 게임설명입니다. 게임설명입니다. 게임설명입니다. 게임설명입니다. 게임설명입니다. "
-                        android:textColor="@android:color/black"
-                        android:visibility="gone" />
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -372,11 +308,13 @@
 
                         <TextView
                             android:layout_width="200dp"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_margin="5dp"
                             android:layout_weight="1"
                             android:gravity="center"
                             android:text="게임 스토리 설명란"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/nanumbarungothic"
                             android:textColor="@android:color/black"
                             android:textSize="18sp"
                             tools:layout_margin="10dp" />
@@ -409,12 +347,78 @@
                         android:gravity="start|top"
                         android:inputType="textMultiLine"
                         android:padding="10dp"
-                        android:text="게임 스토리 설명입니다. 게임 스토리 설명입니다. 게임 스토리 설명입니다. 게임 스토리 설명입니다. 게임 스토리 설명입니다. 게임 스토리 설명입니다. 게임 스토리 설명입니다. 게임 스토리 설명입니다. 게임 스토리 설명입니다."
+                        android:text="천만인구 서울에서 김서방 다섯명을 찾아라! 서울 곳곳에 숨어있는 김서방을 찾아주세요!"
                         android:textColor="@android:color/black"
                         android:visibility="gone" />
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#ffff"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#ffff"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="게임 방법 설명란"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/nanumbarungothic"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp"
+                        tools:layout_margin="10dp" />
+
+                    <TextView
+                        android:id="@+id/show_game_tv"
+                        android:layout_width="10dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:ems="10"
+                        android:gravity="right|fill_vertical"
+                        android:inputType="textPersonName"
+                        android:onClick="unfold_cardview"
+                        android:text="▼ 더보기"
+                        android:textColor="@android:color/black"
+                        android:textSize="12sp"
+                        tools:layout_margin="10dp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/explan_game_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="#ffff"
+                    android:ems="10"
+                    android:gravity="start|top"
+                    android:inputType="textMultiLine"
+                    android:padding="10dp"
+                    android:text="우리는 김서방의 생각을 볼 수 있습니다. 주어진 힌트와 똑같은 생각을 하고 있는 그 사람이 바로 김서방!"
+                    android:textColor="@android:color/black"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -442,6 +446,8 @@
                             android:layout_weight="1"
                             android:gravity="center"
                             android:text="목표 장소 설명란"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/nanumbarungothic"
                             android:textColor="@android:color/black"
                             android:textSize="18sp"
                             tools:layout_margin="10dp" />
@@ -474,7 +480,7 @@
                         android:gravity="start|top"
                         android:inputType="textMultiLine"
                         android:padding="10dp"
-                        android:text="목표장소 설명입니다.목표장소 설명입니다.."
+                        android:text="목표장소 설명입니다.목표장소 설명입니다."
                         android:textColor="@android:color/black"
                         android:visibility="gone" />
 
