@@ -20,6 +20,7 @@
         android:textStyle="bold" />
 
     <EditText
+        android:id="@+id/login_email"
         android:background="@drawable/edge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,6 +35,7 @@
         android:foregroundTint="#000"/>
 
     <EditText
+        android:id="@+id/login_passwd"
         android:background="@drawable/edge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

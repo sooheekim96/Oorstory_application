@@ -114,47 +114,33 @@ public class UserdbHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-//    public long readLoginRecord(String email, String password){
-//        SQLiteDatabase db = getReadableDatabase();
-//        ContentValues values = new ContentValues();
-//        try{
-//            String[] projection = {
-//                    BaseColumns._ID, //Primary Key
-//                    Model.USERID,
-//                    Model.EMAIL,
-//                    Model.USERIMG,
-//                    Model.PASSWORD
-//            };
-//            String checkEmail = Model.EMAIL + " = ?";
-//            String checkPassword = Model.PASSWORD + " = ?";
-//            String[] selectionArgs = { email, password };
-//            String sortOrder =
-//                    Model.EMAIL + " DESC";
-//
-//            Cursor cursor = db.query(
-//                    Model.USERTABLE,
-//                    projection,
-//                    checkEmail+ " and "+checkPassword,
-//                    selectionArgs,
-//                    null,
-//                    null,
-//                    sortOrder
-//            );
-//            List itemIds = new ArrayList<>();
-//            while(cursor.moveToNext()) {
-//                long itemId = cursor.getLong(
-//                        cursor.getColumnIndexOrThrow(Model._ID));
-//                itemIds.add(itemId);
-//            }
-//            cursor.close();
-//
-//
-//            return 1;
-//        } catch (Exception e){
-//            e.printStackTrace();
-//            return -1;
-//        }
-//    }
+    public long readLoginRecord(String email, String password) {
+        SQLiteDatabase db = getReadableDatabase();
+        ContentValues values = new ContentValues();
+        Cursor cursor = db.query(
+                Model.USERTABLE,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+        while (cursor.moveToNext()) {
+            String em = cursor.getString(2);
+            String pw = cursor.getString(4);
+            if (em.equals(email) && pw.equals(password)) {
+                Log.i(TAG, Model.USERTABLE + " email : " + email + "pw: " + password);
+                cursor.close();
+                return 1;
+            } else {
+                Log.i(TAG, Model.USERTABLE + " email : " + email + "pw: " + password);
+                cursor.close();
+                return -1;
+            }
+        }
+        return -1;
+    }
 }
 
 
