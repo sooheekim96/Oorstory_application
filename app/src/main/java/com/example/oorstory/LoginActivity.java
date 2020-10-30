@@ -3,9 +3,11 @@ package com.example.oorstory;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +15,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blogspot.atifsoftwares.circularimageview.CircularImageView;
+import com.example.oorstory.model.Model;
+import com.example.oorstory.model.SharedPreferenceUtil;
+
+import static androidx.constraintlayout.motion.utils.Oscillator.TAG;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -40,20 +46,28 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         Intent intent;
         switch (v.getId()){
-            case R.id.login_btn :
+            case R.id.login_btn:
                 dbHelper = new UserdbHelper(this);
-                email = ""+et_email.getText().toString().trim();
-                passwd = ""+et_passwd.getText().toString().trim();
-                long id = dbHelper.readLoginRecord(
-                        ""+email,
-                        ""+passwd
-                );
-                if (id==1) {
-                    intent = new Intent(LoginActivity.this, PrologueActivity.class);
-                    finish();
-                    startActivity(intent);
-                }
-                else {
+                email = "" + et_email.getText().toString().trim();
+                passwd = "" + et_passwd.getText().toString().trim();
+                Cursor cursor = dbHelper.readUser();
+                try {
+                    while (cursor.moveToNext()) { //while cursor goes last one
+                        String id = cursor.getString(1);
+                        String em = cursor.getString(2);
+                        String pw = cursor.getString(4);
+                        if (em.equals(email) && pw.equals(passwd)) {
+                            Log.i(TAG, Model.USERTABLE + " email : " + email + "pw: " + passwd);
+                            SharedPreferenceUtil.getInstance(getApplicationContext()).setUserid(id);
+                            cursor.close();
+                            intent = new Intent(LoginActivity.this, PrologueActivity.class);
+                            finish();
+                            startActivity(intent);
+                            break;
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                     Toast.makeText(this, "아이디나 비밀번호를 다시 확인해주세요.", Toast.LENGTH_SHORT).show();
                 }
                 break;

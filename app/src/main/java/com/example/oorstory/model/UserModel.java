@@ -17,42 +17,65 @@ public class UserModel {
 
         public static final String SQL_DELETE_TABLE =
                 "DROP TABLE IF EXISTS "+Model.USERTABLE;
-    }
 
-//    public static class userPlaceModel implements BaseColumns {
-//        public static final String TABLE_NAME = "userPlaceTable";
-//        public static final String COLUMN_PLACEISFIN = "placeIsfin";
-//        public static final Timestamp COLUMN_PLACEFINDATE = Timestamp.valueOf("placeFindate");
-//        public static final String SQL_CREATE_TABLE =
-//                "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" +
-//                        _ID + " INTEGER PRIMARY KEY," +
-//                        COLUMN_USERID + " TEXT," +
-//                        userStoryModel.COLUMN_STORYID + " TEXT," +
-//                        COLUMN_PLACEISFIN + " TEXT," +
-//                        COLUMN_PLACEFINDATE + " TIME)";
-//
-//        public static final String SQL_DELETE_TABLE =
-//                "DROP TABLE IF EXISTS " + TABLE_NAME;
-//    }
-//
-//    public static class userStoryModel implements BaseColumns {
-//        public static final String TABLE_NAME = "userStoryTable";
-//        public static final String COLUMN_STORYID = "storyid";
-//        public static final String COLUMN_STORYFINDATE = "storyFindate";
-//        public static final Timestamp COLUMN_STORYFINTIME = Timestamp.valueOf("storyFintime");
-//        public static final Integer COLUMN_STORYGAUGE = Integer.valueOf("storyGauge");
-//        public static final Integer COLUMN_STORYFAV = Integer.valueOf("storyFav");
-//        public static final String SQL_CREATE_TABLE =
-//                "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" +
-//                        _ID + " INTEGER PRIMARY KEY," +
-//                        COLUMN_USERID + " TEXT," +
-//                        COLUMN_STORYID + " TEXT," +
-//                        COLUMN_STORYFINDATE + " TIMESTAMP," +
-//                        COLUMN_STORYFINTIME + " TIME," +
-//                        COLUMN_STORYGAUGE + " INTEGER," +
-//                        COLUMN_STORYFAV + " INTEGER)";
-//
-//        public static final String SQL_DELETE_TABLE =
-//                "DROP TABLE IF EXISTS " + TABLE_NAME;
-//    }
+        public static final String SQL_CREATE_TABLE2 =
+                "create table if not exists "+ Model.COMMENTTABLE+
+                        "(_no integer primary key autoincrement,"+
+                        "id text,"+
+                        "content text,"+
+                        "date text);";
+
+        public static final String SQL_DELETE_TABLE2 =
+                "DROP TABLE IF EXISTS "+Model.COMMENTTABLE;
+
+        public static final String SQL_CREATE_TABLE3 =
+                "create table if not exists "+ Model.PLACETABLE+
+                        "(_no integer primary key autoincrement,"+
+                        "placename text,"+
+                        "placeimage text,"+
+                        "placeflow text,"+
+                        "latitude float,"+
+                        "longitude float,"+
+                        "missionname text,"+
+                        "missionflow text,"+
+                        "missionimage text,"+
+                        "fin integer"+
+                        "date text"+
+                        "percent integer);";
+
+        public static final String SQL_DELETE_TABLE3 =
+                "DROP TABLE IF EXISTS "+Model.PLACETABLE;
+
+        public static final String SQL_CREATE_TABLE4 =
+                "create table if not exists "+ Model.STORYTABLE+
+                        "(_no integer primary key autoincrement,"+
+                        "name text,"+
+                        "image text,"+
+                        "flow text,"+
+                        "difficulty integer,"+
+                        "theme text,"+
+                        "time integer,"+
+                        "fav integer,"+
+                        "number integer,"+
+                        "start integer,"+
+                        "first integer,"+
+                        "second integer,"+
+                        "third integer,"+
+                        "final integer);";
+
+        public static final String SQL_DELETE_TABLE4 =
+                "DROP TABLE IF EXISTS "+Model.STORYTABLE;
+
+        public static final String SQL_CREATE_TABLE5 =
+                "create table if not exists "+ Model.GAUGETABLE+
+                        "(_no integer primary key autoincrement,"+
+                        "name text,"+
+                        "fin integer,"+
+                        "time text,"+
+                        "date text,"+
+                        "percent integer);";
+
+        public static final String SQL_DELETE_TABLE5 =
+                "DROP TABLE IF EXISTS "+Model.GAUGETABLE;
+    }
 }

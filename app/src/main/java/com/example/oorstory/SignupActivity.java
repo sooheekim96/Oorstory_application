@@ -22,6 +22,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.blogspot.atifsoftwares.circularimageview.CircularImageView;
+import com.example.oorstory.model.Model;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -90,7 +91,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                     Toast.makeText(SignupActivity.this, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    long id = dbHelper.insertRecord(
+                    long id = dbHelper.insertUserRecord(
                             ""+userid,
                             ""+email,
                             ""+imageUri,
@@ -206,7 +207,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
             break;
             case STORAGE_REQ_CODE:{
                 if (grantResults.length>0){
-                    boolean storageAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
+                    boolean storageAccepted = (grantResults[1] == PackageManager.PERMISSION_GRANTED);
                     if (storageAccepted) {
                         pickFromGallery();
                     }
