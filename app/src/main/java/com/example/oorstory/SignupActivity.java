@@ -36,7 +36,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     CircularImageView iv_img;
 
 
-    private final Pattern textPattern = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*_\\-]).+$");
+    private final Pattern textPattern = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&+=]).{8,}$");
 
     private static final int CAMERA_REQ_CODE = 100;
     private static final int STORAGE_REQ_CODE = 101;
@@ -69,55 +69,47 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         cameraPermissions = new String[] {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         storagePermissions = new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
-        iv_img.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                imgPick();
-            }
-        });
+        iv_img.setOnClickListener(v -> imgPick());
 
-        btn_register.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                try{
-                    userid = ""+et_id.getText().toString().trim();
-                    email = ""+et_email.getText().toString().trim();
-                    passwd = ""+et_passwd.getText().toString().trim();
-                    passwd2 = ""+et_passwd2.getText().toString().trim();
-                    boolean case1 = (6>userid.length()) || (userid.length()>12);
-                    boolean case2 = (8>passwd.length()) || (passwd.length()>20 || (isTextValid(passwd)));
-                    boolean case3 = passwd.length()!=passwd2.length();
-                    if (case1){
-                        Toast.makeText(SignupActivity.this, "6~12자 영문, 숫자로 입력해주세요.", Toast.LENGTH_SHORT).show();
-                    }
-                    else if (case2) {
-                        Toast.makeText(SignupActivity.this, "8~20자 영문 대소문자, 숫자, 특수문자를 혼합하여 입력해주세요.", Toast.LENGTH_SHORT).show();
-                    }
-                    else if (case3) {
-                        Toast.makeText(SignupActivity.this, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        long id = dbHelper.insertRecord(
-                                ""+userid,
-                                ""+email,
-                                ""+imageUri,
-                                ""+passwd
-                        );
+        btn_register.setOnClickListener(v -> {
+            try{
+                userid = ""+et_id.getText().toString().trim();
+                email = ""+et_email.getText().toString().trim();
+                passwd = ""+et_passwd.getText().toString().trim();
+                passwd2 = ""+et_passwd2.getText().toString().trim();
+                boolean case1 = (6>userid.length()) || (userid.length()>12);
+                boolean case2 = (8>passwd.length()) || (passwd.length()>20 || (isTextValid(passwd)));
+                boolean case3 = passwd.length()!=passwd2.length();
+                if (case1){
+                    Toast.makeText(SignupActivity.this, "6~12자 영문, 숫자로 입력해주세요.", Toast.LENGTH_SHORT).show();
+                }
+                else if (case2) {
+                    Toast.makeText(SignupActivity.this, "8~20자 영문 대소문자, 숫자, 특수문자를 혼합하여 입력해주세요.", Toast.LENGTH_SHORT).show();
+                }
+                else if (case3) {
+                    Toast.makeText(SignupActivity.this, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    long id = dbHelper.insertRecord(
+                            ""+userid,
+                            ""+email,
+                            ""+imageUri,
+                            ""+passwd
+                    );
 
-                        if (id>0) {
+                    if (id>0) {
 //                            Toast.makeText(SignupActivity.this, "Record Added against ID:"+id, Toast.LENGTH_SHORT).show();
 //                            sleep(10);
-                            Toast.makeText(SignupActivity.this, "회원가입이 완료되었습니다.", Toast.LENGTH_SHORT).show();
-                            finish();
-                        }
-                        else {
-                            Toast.makeText(SignupActivity.this, "Error creating user", Toast.LENGTH_SHORT).show();
-                        }
+                        Toast.makeText(SignupActivity.this, "회원가입이 완료되었습니다.", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                    else {
+                        Toast.makeText(SignupActivity.this, "Error creating user", Toast.LENGTH_SHORT).show();
                     }
                 }
-                catch(Exception e) {
-                    Toast.makeText(SignupActivity.this, "Error creating user", Toast.LENGTH_LONG).show();
-                }
+            }
+            catch(Exception e) {
+                Toast.makeText(SignupActivity.this, "Error creating user", Toast.LENGTH_LONG).show();
             }
         });
         findViewById(R.id.back_btn_signup).setOnClickListener(this);
@@ -132,24 +124,21 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         String[] options = {"Camera", "Gallery"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Pick Profile Image");
-        builder.setItems(options, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (which==0){
-                    if (!checkCameraPermission()) {
-                        requestCameraPermission();
-                    }
-                    else {
-                        pickFromCamera();
-                    }
+        builder.setItems(options, (dialog, which) -> {
+            if (which==0){
+                if (!checkCameraPermission()) {
+                    requestCameraPermission();
                 }
-                else if (which==1){
-                    if (!checkStoragePermission()) {
-                        requestStoragePermission();
-                    }
-                    else {
-                        pickFromGallery();
-                    }
+                else {
+                    pickFromCamera();
+                }
+            }
+            else if (which==1){
+                if (!checkStoragePermission()) {
+                    requestStoragePermission();
+                }
+                else {
+                    pickFromGallery();
                 }
             }
         });
@@ -175,9 +164,8 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private boolean checkStoragePermission(){
-        boolean result = ContextCompat.checkSelfPermission(this,
+        return ContextCompat.checkSelfPermission(this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
-        return result;
     }
 
     private void requestStoragePermission(){
