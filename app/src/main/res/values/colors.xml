@@ -3,7 +3,7 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
-    <color name="colorCategoryClick">#79A5B5</color>
+    <color name="colorCategoryClick">#F4F4F4</color>
     <color name="colorCategoryNonClick">#FFF</color>
     <color name="colorBackground">#151B29</color>
     <color name="colorYellow">#F5FA55</color>
@@ -12,4 +12,6 @@
     <color name="colorGreen">#a2e665</color>
     <color name="colorGray">#e6e6e6</color>
     <color name="colorBlack">#000000</color>
+    <color name="colorCategoryTextClick">#56E85E</color>
+    <color name="colorCategoryNonTextClick">#FFF</color>
 </resources>

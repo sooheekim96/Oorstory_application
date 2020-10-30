@@ -1,10 +1,12 @@
 package com.example.oorstory;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -142,6 +145,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mAdapter_nature.notifyDataSetChanged();
     }
 
+    @SuppressLint("ResourceAsColor")
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void category_onClick(View view) {
         place_tv.setBackgroundResource(R.color.colorCategoryNonClick);
@@ -149,32 +153,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         nature_tv.setBackgroundResource(R.color.colorCategoryNonClick);
         hist_tv.setBackgroundResource(R.color.colorCategoryNonClick);
 
+        place_tv.setTextColor(R.color.colorCategoryNonTextClick);
+        food_tv.setTextColor(R.color.colorCategoryNonTextClick);
+        nature_tv.setTextColor(R.color.colorCategoryNonTextClick);
+        hist_tv.setTextColor(R.color.colorCategoryNonTextClick);
+
         switch (view.getId()) {
             case R.id.place_tv:
                 place_tv.setBackgroundResource(R.color.colorCategoryClick);
+                place_tv.setTextColor(getResources().getColor(R.color.colorCategoryTextClick));
                 mRecyclerView.setAdapter(mAdapter_place);
 //                mRecyclerView.notify();
                 break;
 
             case R.id.food_tv:
                 food_tv.setBackgroundResource(R.color.colorCategoryClick);
+                food_tv.setTextColor(getResources().getColor(R.color.colorCategoryTextClick));
                 mRecyclerView.setAdapter(mAdapter_food);
 //                mRecyclerView.notify();
                 break;
 
             case R.id.hist_tv:
                 hist_tv.setBackgroundResource(R.color.colorCategoryClick);
+                hist_tv.setTextColor(getResources().getColor(R.color.colorCategoryTextClick));
                 mRecyclerView.setAdapter(mAdapter_hist);
 //                mRecyclerView.notify();
                 break;
 
             case R.id.nature_tv:
                 nature_tv.setBackgroundResource(R.color.colorCategoryClick);
+                nature_tv.setTextColor(getResources().getColor(R.color.colorCategoryTextClick));
                 mRecyclerView.setAdapter(mAdapter_nature);
 //                mRecyclerView.notify();
                 break;
         }
     }
+
 
     @Override
     public void onClick(View v) {
