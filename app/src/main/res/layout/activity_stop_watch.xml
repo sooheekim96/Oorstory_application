@@ -1,11 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffff">
+    android:background="#F3F4F6">
+
+
+    <Button
+        android:id="@+id/startStop"
+        android:layout_width="324dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="77dp"
+        android:backgroundTint="#56E85E"
+        android:text="@string/navistart"
+        android:textColor="#fff"
+        android:textSize="14sp" />
+
+    <ImageButton
+        android:id="@+id/back_btn_toStory"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="5dp"
+        android:layout_weight="0.08"
+        android:background="@android:color/transparent"
+        android:paddingLeft="0dp"
+        android:paddingTop="5dp"
+        android:paddingRight="2dp"
+        android:paddingBottom="5dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/back" />
 
 
     <ImageView
@@ -15,8 +43,19 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp"
-        app:srcCompat="@drawable/example_place"
+        android:src="@drawable/example_place"
         tools:layout_editor_absoluteY="221dp" />
+
+    <TextView
+        android:id="@+id/timeView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="215dp"
+        android:text="00:00:00"
+        android:textColor="#000"
+        android:textSize="36sp" />
 
     <TextView
         android:id="@+id/storyTitle"
@@ -45,102 +84,71 @@
         android:textSize="30sp"
         tools:text="@string/place" />
 
-    <TextView
-        android:id="@+id/timeView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <FrameLayout
+        android:id="@+id/framelayout"
+        android:layout_width="match_parent"
+        android:layout_height="62dp"
+        android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="215dp"
-        android:text="00:00:00"
-        android:textColor="#000"
-        android:textSize="36sp" />
+        android:layout_marginBottom="134dp">
 
-    <Button
-        android:id="@+id/startStop"
-        android:layout_width="324dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="77dp"
-        android:backgroundTint="#149414"
-        android:text="@string/navistart"
-        android:textColor="#fff"
-        android:textSize="14sp" />
-    <ImageButton
-    android:id="@+id/back_btn_toStory"
-    android:layout_width="30dp"
-    android:layout_height="30dp"
-    android:layout_weight="0.08"
-    android:background="@android:color/transparent"
-    android:paddingLeft="0dp"
-    android:paddingTop="5dp"
-    android:paddingRight="2dp"
-    android:paddingBottom="5dp"
-    android:scaleType="fitCenter"
-    android:src="@drawable/back"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentTop="true"
-    android:layout_marginTop="5dp" />
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="61dp"
+            android:layout_alignParentStart="false"
+            android:layout_alignParentEnd="false"
+            android:layout_alignParentBottom="false"
+            android:layout_centerHorizontal="false"
+            android:layout_marginStart="45dp"
+            android:layout_marginEnd="49dp"
+            android:layout_marginBottom="126dp"
+            app:srcCompat="@drawable/drawable_rectangle_gray" />
 
-    <ImageButton
-        android:id="@+id/pause"
-        android:layout_width="66dp"
-        android:layout_height="62dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="171dp"
-        android:layout_marginTop="536dp"
-        android:layout_weight="0.08"
-        android:background="@drawable/ic_pause"
-        android:backgroundTint="@color/colorBlack"
-        android:paddingLeft="0dp"
-        android:paddingTop="5dp"
-        android:paddingRight="2dp"
-        android:paddingBottom="5dp"
-        android:scaleType="fitCenter"
-        android:visibility="gone"
-        />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="65dp">
 
-    <ImageButton
-        android:id="@+id/start"
-        android:layout_width="66dp"
-        android:layout_height="62dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerInParent="true"
-        android:layout_marginLeft="171dp"
-        android:layout_marginTop="536dp"
-        android:layout_weight="0.08"
-        android:background="@drawable/ic_start"
-        android:backgroundTint="@color/colorBlack"
-        android:paddingLeft="0dp"
-        android:paddingTop="5dp"
-        android:paddingRight="2dp"
-        android:visibility="gone"
-        android:paddingBottom="5dp"
-        android:scaleType="fitCenter" />
+            <ImageButton
+                android:id="@+id/pause"
+                android:layout_width="66dp"
+                android:layout_height="62dp"
+                android:layout_marginLeft="150dp"
+                android:background="@drawable/ic_pause" />
 
-    <ImageButton
-        android:id="@+id/stop"
-        android:layout_width="66dp"
-        android:layout_height="62dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_centerInParent="true"
-        android:layout_marginLeft="171dp"
-        android:layout_marginTop="536dp"
-        android:layout_marginEnd="53dp"
+            <ImageButton
+                android:id="@+id/stop"
+                android:layout_width="66dp"
+                android:layout_height="62dp"
+                android:background="@drawable/ic_stop" />
 
-        android:layout_weight="0.08"
-        android:background="@drawable/ic_stop"
-        android:backgroundTint="@color/colorBlack"
-        android:paddingLeft="0dp"
-        android:paddingTop="5dp"
-        android:paddingRight="2dp"
-        android:paddingBottom="5dp"
-        android:scaleType="fitCenter"
-        android:visibility="gone"/>
+        </LinearLayout>
+
+
+        <!-- <ImageButton
+            android:id="@+id/start"
+            android:layout_width="66dp"
+            android:layout_height="62dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="171dp"
+            android:layout_marginTop="536dp"
+            android:layout_weight="0.08"
+            android:background="@drawable/ic_start"
+            android:backgroundTint="@color/colorBlack"
+            android:paddingLeft="0dp"
+            android:paddingTop="5dp"
+            android:paddingRight="2dp"
+            android:paddingBottom="5dp"
+            android:scaleType="fitCenter"
+            android:visibility="gone" />-->
+        <!--android:visibility="gone"-->
+
+
+
+
+
+    </FrameLayout>
 
 
 </RelativeLayout>

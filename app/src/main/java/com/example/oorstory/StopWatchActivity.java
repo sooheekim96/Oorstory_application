@@ -2,6 +2,7 @@ package com.example.oorstory;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.Activity;
@@ -29,6 +30,7 @@ import com.skt.Tmap.TMapPoint;
 import com.skt.Tmap.TMapTapi;
 import com.skt.Tmap.TMapGpsManager;
 import com.skt.Tmap.TMapGpsManager.onLocationChangedCallback;
+//import com.unity3d.player.UnityPlayerActivity;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -39,6 +41,7 @@ public class  StopWatchActivity extends Activity implements onLocationChangedCal
     PermissionManager permissionManager = null; // 권한요청 관리자
     AlertDialog.Builder builder; // 종료 경고 알람창
     TMapPoint curLocation;
+    final BroadcastReceiver broadcastReceiver = new broadCastReceiver();
 
     @Override
     public void onLocationChange(Location location){
@@ -50,9 +53,7 @@ public class  StopWatchActivity extends Activity implements onLocationChangedCal
     private int pre_time = 0;
     private String time;
     private TextView storyTitle;
-    private TextView placeTitle;
     private String title;
-    private String palace;
     private ImageButton start_btn;
     private ImageButton pause_btn;
     private ImageButton stop_btn;
@@ -70,6 +71,7 @@ public class  StopWatchActivity extends Activity implements onLocationChangedCal
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.e("onCreate", "created");
         setContentView(R.layout.activity_stop_watch);
 
         gps = new TMapGpsManager(StopWatchActivity.this);
@@ -81,21 +83,23 @@ public class  StopWatchActivity extends Activity implements onLocationChangedCal
         timeView = findViewById(R.id.timeView);
         tMapTapi = new TMapTapi(this);
         back_btn= findViewById(R.id.back_btn_toStory);
-        start_btn = findViewById(R.id.start);
+        //start_btn = findViewById(R.id.start);
         pause_btn = findViewById(R.id.pause);
         stop_btn = findViewById(R.id.stop);
-        placeTitle = findViewById((R.id.placeTitle));
+
+        pause_btn.setEnabled(false);
+        stop_btn.setEnabled(false);
 
         Intent intent = getIntent();
         title = intent.getStringExtra("title");
-        palace = intent.getStringExtra("place");
         storyTitle.setText(title);
-        placeTitle.setText(palace);
 
         //위치확인 권한
         PermissionRequest();
         //서비스 결과 -- Time을 받는 Receiver 등록
-        RegisterReceiver();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("StopWatch");
+        registerReceiver(broadcastReceiver, intentFilter);
     }
 
     @Override
@@ -105,6 +109,7 @@ public class  StopWatchActivity extends Activity implements onLocationChangedCal
         //종료시 경고창 setting
         setAlertDialog();
 
+
         //Start TimeNotiService:
         ifarrived.setOnClickListener(new View.OnClickListener() {
 
@@ -112,9 +117,11 @@ public class  StopWatchActivity extends Activity implements onLocationChangedCal
             public void onClick(View v) {
                 //TMAP 미설치 시 설치 안내
                 ChecktmapInstalled();
+                Log.e("isNaviStart", String.valueOf(isNaviStart));
 
                 if (!isNaviStart) {
                     //타이머 시작
+
                     ServiceStart();
 
                     //네비게이션 시작
@@ -126,6 +133,9 @@ public class  StopWatchActivity extends Activity implements onLocationChangedCal
                     pre_time = 0;
                     //안내 종료 --
                     isNaviStart = false;
+                    unregisterReceiver(broadcastReceiver);
+
+                    closeGame();
 
                     //위치 확인
                     if (ifinThisArea()) {
@@ -140,9 +150,17 @@ public class  StopWatchActivity extends Activity implements onLocationChangedCal
                          AR game 실행
                          ...
                         */
+                        /*Intent unityIntent = new Intent(StopWatchActivity.this, UnityPlayerActivity.class);
+                        startActivity(unityIntent);*/
 
                     } else {
                         Toast.makeText(StopWatchActivity.this, "목적지 주변이 아닙니다", Toast.LENGTH_SHORT);
+
+                        //실험용
+                        //확인 절차를 위해 넣었으니 이 부분을 삭제 바람
+                        /*Intent unityIntent = new Intent(StopWatchActivity.this, UnityPlayerActivity.class);
+                        startActivity(unityIntent);*/
+
                     }
                 }
             }
@@ -180,10 +198,15 @@ public class  StopWatchActivity extends Activity implements onLocationChangedCal
                     Log.d("pretime", Integer.toString(pre_time));
 
                 }
+                else{
+                    pause_btn.setBackgroundResource(R.drawable.ic_start);
+                    ServiceStart();
+
+                }
             }
         });
 
-        start_btn.setOnClickListener(new View.OnClickListener() {
+        /*.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (isNaviStart) {
@@ -191,7 +214,7 @@ public class  StopWatchActivity extends Activity implements onLocationChangedCal
 
                 }
             }
-        });
+        });*/
 
         stop_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -206,6 +229,13 @@ public class  StopWatchActivity extends Activity implements onLocationChangedCal
                 }
             }
         });
+    }
+
+    @Override
+    protected  void onDestroy() {
+        super.onDestroy();
+        Log.e("onDestory", "destroy");
+        unbindService(connection);
     }
 
 
@@ -248,6 +278,7 @@ public class  StopWatchActivity extends Activity implements onLocationChangedCal
         });
         builder.setNegativeButton(R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
+                unregisterReceiver(broadcastReceiver);
 
                 //activate gamestart button
                 final Intent intentLocal = new Intent();
@@ -265,7 +296,7 @@ public class  StopWatchActivity extends Activity implements onLocationChangedCal
 
         if (!isNaviStart) {
             closeGame();
-
+            unregisterReceiver(broadcastReceiver);
         }else{
 
             //이전 기록 임시 저장
@@ -298,9 +329,15 @@ public class  StopWatchActivity extends Activity implements onLocationChangedCal
 
         //화면 전환
         ifarrived.setText(R.string.arrived);
-        pause_btn.setVisibility(View.VISIBLE);
-        stop_btn.setVisibility(View.VISIBLE);
-        start_btn.setVisibility(View.GONE);
+        //pause_btn.setVisibility(View.VISIBLE);
+        pause_btn.setBackgroundResource(R.drawable.ic_pause);
+        pause_btn.setEnabled(true);
+
+        stop_btn.setEnabled(true);
+        //pause_btn.setBackgroundColor(ContextCompat.getColor(this,
+        //        R.color.colorBlack));
+        //pause_btn.(ContextCompat.getColor(this,
+         //       R.color.colorBlack));
 
         bindService(serviceIntent, connection, BIND_AUTO_CREATE );
     }
@@ -309,9 +346,11 @@ public class  StopWatchActivity extends Activity implements onLocationChangedCal
         if(isStart){ // service Intent로 할 수도 있을 것 같다.
             stopService(serviceIntent);
             unbindService(connection);
-            start_btn.setVisibility(View.VISIBLE);
-            pause_btn.setVisibility(View.GONE);
-            stop_btn.setVisibility(View.GONE);
+
+            pause_btn.setBackgroundResource(R.drawable.ic_start);
+            //start_btn.setVisibility(View.VISIBLE);
+            //pause_btn.setVisibility(View.GONE);
+            //stop_btn.setVisibility(View.GONE);
 
             isStart = false;
         }
@@ -354,21 +393,16 @@ public class  StopWatchActivity extends Activity implements onLocationChangedCal
         permissionManager.setResponse(requestCode, grantResults); // 권한요청 관리자에게 결과 전달
     }
 
-    private void RegisterReceiver(){
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("StopWatch");
-        final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
+    public class broadCastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
 
-                seconds = intent.getIntExtra("seconds", 0);
-                Log.e("service seconds", Integer.toString(seconds) );
-                time = intent.getStringExtra("timer");
+            seconds = intent.getIntExtra("seconds", 0);
+            //Log.e("service seconds", Integer.toString(seconds) );
+            time = intent.getStringExtra("timer");
 
-                timeView.setText(time);
-            }
-        };
-        registerReceiver(broadcastReceiver, intentFilter);
+            timeView.setText(time);
+        }
     }
 
     private ServiceConnection connection = new ServiceConnection() {
@@ -420,8 +454,10 @@ public class  StopWatchActivity extends Activity implements onLocationChangedCal
         //주행옵션 - 이륜차(자전거)
         pathInfo.put("rSOpt", "6");
 
-        tMapTapi.invokeRoute(pathInfo);
         isNaviStart = true;
+        Log.e("isNavi", "start");
+        tMapTapi.invokeRoute(pathInfo);
+
     }
 
 
