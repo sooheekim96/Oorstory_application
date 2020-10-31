@@ -42,21 +42,17 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         cAdapter = new RecyclerCommentsAdapter(cList);
 
         et_comment = findViewById(R.id.et_comment);
-//        findViewById(R.id.btn_comment_add).setOnClickListener(this);
-//        findViewById(R.id.back_btn_toMap).setOnClickListener(this);
-//
-//
-//
-//        addItem("장한솔", "재밌어요", "2020-08-22");
-//        addItem("유다연", "재미없어요", "2020-08-23");
-//        addItem("유다연", "재미없어요", "2020-08-23");
-//        addItem("유다연", "재미없어요", "2020-08-23");
-//        addItem("유다연", "재미없어요", "2020-08-23");
-//        addItem("유다연", "재미없어요", "2020-08-23");
-//        addItem("유다연", "재미없어요", "2020-08-23");
-//        addItem("유다연", "재미없어요", "2020-08-23");
+        findViewById(R.id.btn_comment_add).setOnClickListener(this);
+        findViewById(R.id.back_btn_toMap).setOnClickListener(this);
 
-        DataArrays();
+        addItem("마카롱케잌", "김서방 찾는거 바로 되신 분? 전 운 좋게 바로 찾았어요 ㅎㅎ", "2020-04-04");
+        addItem("붉은하늘", "이 앱이 나를 여기저기 움직이게 만드네! 짱추짱추><", "2020-08-21");
+        addItem("실도둑", "댓글보고 쉽겠다 하고 김서방찾기 게임했는데 저만 김서방 찾기 어려운건가요...?", "2020-08-22");
+        addItem("김태형", "힌트를 잘 보면서 김서방 찾으려고 노력하면 높은 확률로 김서방 찾을 수 있던데!!","2020-08-22");
+        addItem("유다연","재밌네요!","2020-08-23");
+        addItem("자전거조아","이런 앱도 있었엌ㅋㅋ재밌닼ㅋㅋㅋ","2020-08-24");
+
+        //DataArrays();
 
         c_recycler.setAdapter(cAdapter);
         cAdapter.notifyDataSetChanged();

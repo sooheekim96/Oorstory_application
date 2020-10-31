@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.oorstory.SplashActivity"
-    android:background="#F3F4F6">
+    android:background="#ffff">
 
 <!--    <TextView
         android:layout_width="match_parent"
@@ -23,7 +23,7 @@
         android:layout_width="350dp"
         android:layout_height="385dp"
         android:layout_gravity="center"
-        android:src="@drawable/oorstoryintro"
+        android:src="@drawable/oorstorylogo2"
         tools:layout_editor_absoluteX="30dp"
         tools:layout_editor_absoluteY="144dp"
         app:layout_constraintBottom_toBottomOf="parent"

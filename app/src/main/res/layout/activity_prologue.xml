@@ -54,31 +54,31 @@
         android:id="@+id/cardView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
         app:layout_constraintBottom_toTopOf="@+id/prologue_pb"
         app:layout_constraintEnd_toEndOf="@+id/prologue_pb"
-        app:layout_constraintStart_toStartOf="@+id/prologue_pb"
-        app:layout_constraintTop_toBottomOf="@+id/proImgView">
+        app:layout_constraintStart_toStartOf="@+id/prologue_pb">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="301dp"
+            android:layout_height="wrap_content"
             android:background="#ffff"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/prologue_tv"
                 android:layout_width="match_parent"
-                android:layout_height="240dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:fontFamily="@font/nanumbarungothic"
-                android:textStyle="bold"
                 android:gravity="center_horizontal"
                 android:paddingLeft="10dp"
                 android:paddingTop="10dp"
                 android:paddingRight="10dp"
                 android:text="프롤로그"
                 android:textColor="#000"
-                android:textSize="20dp" />
+                android:textSize="20dp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/next_tv"

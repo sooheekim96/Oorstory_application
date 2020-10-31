@@ -43,7 +43,7 @@ public class StoryActivity extends AppCompatActivity {
     private ViewPager2 mPager;
     private FragmentStateAdapter pagerAdapter;
     private int num_page = 2;
-    private String[] descs = { "강남역 11번 출구", "잠실한강공원"};
+    private String[] descs = { "강남역 11번 출구", "잠실종합운동장"};
     private String desc ;
 
     /*    private CircleIndicator3 mIndicator;*/

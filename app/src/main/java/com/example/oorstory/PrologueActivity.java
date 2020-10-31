@@ -19,12 +19,12 @@ public class PrologueActivity extends AppCompatActivity implements View.OnClickL
     private ImageView proImg;
     private TextView progNext;
     private String[] prologues = {
-            "우리 열차는 잠시 후 서울역에 도착하겠습니다. ",
-            "당신이 꿈에 그리던 서울에 드디어 도착했습니다. ",
-            "이 넓은 서울을 어디부터 돌아볼건가요?",
+            "우리 열차는 \n잠시 후 서울역에 도착하겠습니다. ",
+            "당신이 꿈에 그리던\n 서울에 드디어 도착했습니다. ",
+            "이 넓은 서울을 \n어디부터 돌아볼건가요?",
             "잠깐만요 ! 당신이 핸드폰 하나와 자전거만 들고 온 걸 잊은 건 아니죠?",
-            "거기다가 한달 후에는 집으로 돌아가야 돼요",
-            "당연하죠 ! 지금바로 떠나볼까요?"};
+            "그리고 한달 후에는\n 집으로 돌아가야 돼요",
+            "당연하죠 !\n지금바로 떠나볼까요?"};
     private String[] prologuesText = {
             "다음으로",
             "여기가 서울인가!",
@@ -95,7 +95,7 @@ public class PrologueActivity extends AppCompatActivity implements View.OnClickL
                 index = index-1;
                 if (index>=0 && index<prologues.length){
                     mProgBar.setProgress(index);
-                    progNext.setText(prologues[index]);
+                    progNext.setText(prologuesText[index]);
                     progTv.setText(prologues[index]);
                     proImg.setImageResource(Integer.parseInt(prologuesImg[index]));
                 } else{ index = index+1;

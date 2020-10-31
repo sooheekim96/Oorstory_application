@@ -77,9 +77,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         locations = new HashMap<String, Double[]>();
 
         //locations에 마커를 표시할 위치 정보 가져와 저장하기
-        locations.put("서울역", new Double[]{37.553470, 126.969748}); //서울역
-        locations.put("홍대입구역", new Double[]{37.558130, 126.925655}); //홍대입구역
-        locations.put("회현역", new Double[]{37.558510, 126.978082}); //회현역
+        //locations.put("서울역", new Double[]{37.553470, 126.969748}); //서울역
+        //locations.put("홍대입구역", new Double[]{37.558130, 126.925655}); //홍대입구역
+        //locations.put("서울역", new Double[]{37.553470, 126.969748}); //서울역
+        locations.put("강남역 11번 출구", new Double[]{37.498754, 127.027509});
+        locations.put("잠실종합운동장", new Double[]{37.514975, 127.073354});
 
         // x:위도, y:경도
         Double max_x = null, min_x = null, max_y = null, min_y = null;

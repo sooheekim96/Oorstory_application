@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/story_img2" />
+            android:src="@drawable/t2" />
 
         <LinearLayout
             android:layout_width="match_parent"
