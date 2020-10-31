@@ -16,6 +16,8 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import java.io.InputStream;
 import de.psdev.licensesdialog.LicensesDialog;
+import de.psdev.licensesdialog.licenses.ApacheSoftwareLicense20;
+import de.psdev.licensesdialog.model.Notice;
 import de.psdev.licensesdialog.model.Notices;
 
 public class SettingActivity extends AppCompatActivity implements View.OnClickListener {
@@ -182,6 +184,8 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
          */
         public void showMyLicencesDialog(final View view) {
             final Notices notices = new Notices();
+            notices.addNotice(new Notice("Android Image Cropper", "https://github.com/ArthurHub/Android-Image-Cropper", "Copyright 2016, Arthur Teplitzki, 2013, Edmodo, Inc.", new ApacheSoftwareLicense20()));
+            notices.addNotice(new Notice("CircleIndicator", "https://github.com/ongakuer/CircleIndicator", "Copyright (C) 2014 relex", new ApacheSoftwareLicense20()));
             //notices.addNotice(new Notice("Test 1", "http://example.org", "Example Person", new ApacheSoftwareLicense20()));
             //notices.addNotice(new Notice("Test 2", "http://example.org", "Example Person 2", new MITLicense()));
 
